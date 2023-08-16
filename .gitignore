@@ -1,0 +1,7 @@
+# Project exclude paths
+/adder/target/
+/divider/target/
+/job-controller/target/
+/multiplier/target/
+/supercomputer/target/
+/task-scheduler/target/
