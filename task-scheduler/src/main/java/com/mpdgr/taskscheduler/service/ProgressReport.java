@@ -1,6 +1,6 @@
 package com.mpdgr.taskscheduler.service;
 
-import com.mpdgr.taskscheduler.domain.ComputationType;
+import com.mpdgr.commonrepo.enumeration.ComputationType;
 import lombok.Data;
 
 import java.util.Collections;

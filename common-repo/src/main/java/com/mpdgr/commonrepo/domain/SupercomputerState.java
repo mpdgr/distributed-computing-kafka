@@ -1,5 +1,6 @@
-package com.mpdgr.taskscheduler.domain;
+package com.mpdgr.commonrepo.domain;
 
+import com.mpdgr.commonrepo.enumeration.SupercomputerStateType;
 import lombok.Data;
 
 @Data

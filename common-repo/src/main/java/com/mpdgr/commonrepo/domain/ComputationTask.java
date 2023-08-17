@@ -1,5 +1,6 @@
-package com.mpdgr.taskscheduler.domain;
+package com.mpdgr.commonrepo.domain;
 
+import com.mpdgr.commonrepo.enumeration.ComputationType;
 import lombok.Data;
 
 @Data

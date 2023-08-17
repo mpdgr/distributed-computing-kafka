@@ -1,8 +1,8 @@
 package com.mpdgr.taskscheduler.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mpdgr.taskscheduler.domain.ComputationEvent;
-import com.mpdgr.taskscheduler.domain.ComputationType;
+import com.mpdgr.commonrepo.domain.ComputationEvent;
+import com.mpdgr.commonrepo.enumeration.ComputationType;
 import com.mpdgr.taskscheduler.kafka.ComputationEventProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

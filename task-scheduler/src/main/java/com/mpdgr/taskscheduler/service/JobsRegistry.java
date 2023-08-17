@@ -1,7 +1,6 @@
 package com.mpdgr.taskscheduler.service;
 
-import com.mpdgr.taskscheduler.domain.ComputationEvent;
-import org.springframework.context.annotation.Scope;
+import com.mpdgr.commonrepo.domain.ComputationEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

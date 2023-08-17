@@ -1,6 +1,6 @@
 package com.mpdgr.jobcontroller.kafka;
 
-import com.mpdgr.jobcontroller.domain.JobEvent;
+import com.mpdgr.commonrepo.domain.JobEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.support.SendResult;

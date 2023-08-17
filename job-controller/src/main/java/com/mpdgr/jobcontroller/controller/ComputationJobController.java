@@ -1,7 +1,7 @@
 package com.mpdgr.jobcontroller.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mpdgr.jobcontroller.domain.ComputationJob;
+import com.mpdgr.commonrepo.domain.ComputationJob;
 import com.mpdgr.jobcontroller.service.JobProcessor;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

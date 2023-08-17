@@ -1,4 +1,4 @@
-package com.mpdgr.taskscheduler.domain;
+package com.mpdgr.commonrepo.enumeration;
 
 public enum SupercomputerStateType {
     IDLE,

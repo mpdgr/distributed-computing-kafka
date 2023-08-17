@@ -21,6 +21,7 @@
         <module>adder</module>
         <module>supercomputer</module>
         <module>exponent</module>
+        <module>common-repo</module>
     </modules>
 
     <properties>
@@ -57,6 +58,12 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mpdgr</groupId>
+            <artifactId>common-repo</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

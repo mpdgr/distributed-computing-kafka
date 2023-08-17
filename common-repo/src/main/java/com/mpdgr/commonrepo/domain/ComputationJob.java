@@ -1,4 +1,4 @@
-package com.mpdgr.jobcontroller.domain;
+package com.mpdgr.commonrepo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Max;

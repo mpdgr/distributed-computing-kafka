@@ -1,7 +1,7 @@
 package com.mpdgr.jobcontroller.service;
 
-import com.mpdgr.jobcontroller.domain.ComputationTask;
-import com.mpdgr.jobcontroller.domain.ComputationType;
+import com.mpdgr.commonrepo.domain.ComputationTask;
+import com.mpdgr.commonrepo.enumeration.ComputationType;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

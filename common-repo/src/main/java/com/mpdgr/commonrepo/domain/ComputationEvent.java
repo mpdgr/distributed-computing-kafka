@@ -1,4 +1,4 @@
-package com.mpdgr.taskscheduler.domain;
+package com.mpdgr.commonrepo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ComputationEvent extends JobEvent {
+public class ComputationEvent extends JobEvent{
     private String workerId;
     private int taskNr;
     private ComputationTask task;

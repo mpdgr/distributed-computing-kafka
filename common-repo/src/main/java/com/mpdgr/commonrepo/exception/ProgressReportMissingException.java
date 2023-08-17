@@ -1,4 +1,4 @@
-package com.mpdgr.taskscheduler.exceptions;
+package com.mpdgr.commonrepo.exception;
 
 public class ProgressReportMissingException extends Exception{
     public ProgressReportMissingException(String message) {

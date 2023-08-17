@@ -1,10 +1,10 @@
 package com.mpdgr.jobcontroller.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mpdgr.jobcontroller.domain.ComputationEvent;
-import com.mpdgr.jobcontroller.domain.ComputationJob;
-import com.mpdgr.jobcontroller.domain.ComputationTask;
-import com.mpdgr.jobcontroller.domain.ComputationType;
+import com.mpdgr.commonrepo.domain.ComputationEvent;
+import com.mpdgr.commonrepo.domain.ComputationJob;
+import com.mpdgr.commonrepo.domain.ComputationTask;
+import com.mpdgr.commonrepo.enumeration.ComputationType;
 import com.mpdgr.jobcontroller.kafka.ComputationEventProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

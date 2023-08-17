@@ -1,4 +1,4 @@
-package com.mpdgr.jobcontroller.domain;
+package com.mpdgr.commonrepo.enumeration;
 
 public enum ComputationType {
     ADDITION,
