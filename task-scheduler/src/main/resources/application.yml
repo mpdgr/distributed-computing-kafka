@@ -36,3 +36,6 @@ logging:
   level:
     root: info
     com.mpdgr: debug
+computing:
+  properties:
+    minlagassist: 2

@@ -25,6 +25,9 @@ public class KafkaTopicsConfig {
     @Value("${spring.kafka.topic.supercomputer}")
     private String supercomputer;
 
+    @Value("${spring.kafka.topic.supercomputer-state}")
+    private String supercomputerState;
+
     @Bean
     public NewTopic compute(){
         log.info("Creating Kafka topic: {}", compute);
@@ -92,6 +95,17 @@ public class KafkaTopicsConfig {
         return TopicBuilder
                 .name(supercomputer)
                 .partitions(3)
+                .replicas(3)
+                .build();
+    }
+
+    //only one partition to keep track of message order
+    @Bean
+    public NewTopic supercomputerState(){
+        log.info("Creating Kafka topic: {}", supercomputerState);
+        return TopicBuilder
+                .name(supercomputerState)
+                .partitions(1)
                 .replicas(3)
                 .build();
     }

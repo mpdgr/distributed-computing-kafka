@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.internals.RecordHeader;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
@@ -19,15 +18,16 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class TaskDistributorProducer {
+public class ComputationEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
-    public CompletableFuture<SendResult<String, String>> sendEventToWorkersTopics(ComputationEvent event, String topic)
+    public CompletableFuture<SendResult<String, String>> sendComputationEvent(ComputationEvent event,
+                                                                              String targetTopic)
             throws JsonProcessingException {
         String key = event.getJobId();
         String value = mapper.writeValueAsString(event.getTask());
-        ProducerRecord<String, String> record = buildRecord(topic, key, value);
+        ProducerRecord<String, String> record = buildRecord(targetTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);
         return resultFuture.whenComplete(new SendResultBiConsumer<>(event));
     }
