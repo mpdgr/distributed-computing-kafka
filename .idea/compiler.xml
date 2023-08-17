@@ -10,13 +10,16 @@
         <module name="common-repo" />
         <module name="supercomputer" />
         <module name="job-controller" />
-        <module name="divider" />
-        <module name="multiplier" />
-        <module name="adder" />
         <module name="task-scheduler" />
-        <module name="exponent" />
+        <module name="workercomputer" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="adder" target="17" />
+      <module name="divider" target="17" />
+      <module name="exponent" target="17" />
+      <module name="multiplier" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -28,6 +31,7 @@
       <module name="multiplier" options="-parameters" />
       <module name="supercomputer" options="-parameters" />
       <module name="task-scheduler" options="-parameters" />
+      <module name="workercomputer" options="-parameters" />
     </option>
   </component>
 </project>

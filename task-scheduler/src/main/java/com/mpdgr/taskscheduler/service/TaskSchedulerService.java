@@ -1,8 +1,8 @@
 package com.mpdgr.taskscheduler.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mpdgr.taskscheduler.domain.ComputationEvent;
-import com.mpdgr.taskscheduler.exceptions.ProgressReportMissingException;
+import com.mpdgr.commonrepo.domain.ComputationEvent;
+import com.mpdgr.commonrepo.exception.ProgressReportMissingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

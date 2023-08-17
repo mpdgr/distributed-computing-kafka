@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    active: local
+server:
+  port: 8082
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  kafka:
+    bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: task-scheduler
+#    properties:
+#      acks: -1  #todo: chyba nie działa
+#      retries: 50
+#    admin:
+#      properties:
+#        client.id: adm
+    topic:
+      compute-task: compute-task
+      completed-task: completed-task
+      addition: addition
+      multiplication: multiplication
+      division: division
+      exponent: exponent
+      supercomputer: supercomputer
+logging:
+  level:
+    root: info
+    com.mpdgr: debug
+
+instance:
+  properties:
+    worker:
+      type: ${WORKER_TYPE}
+      delay: ${WORKER_DELAY}

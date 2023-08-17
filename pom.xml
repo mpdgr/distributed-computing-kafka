@@ -14,14 +14,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>multiplier</module>
         <module>job-controller</module>
         <module>task-scheduler</module>
-        <module>divider</module>
-        <module>adder</module>
         <module>supercomputer</module>
-        <module>exponent</module>
         <module>common-repo</module>
+        <module>workercomputer</module>
     </modules>
 
     <properties>
