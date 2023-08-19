@@ -28,6 +28,7 @@ spring:
       division: division
       exponent: exponent
       supercomputer: supercomputer
+      supercomputer-state: supercomputer-state
 logging:
   level:
     root: info

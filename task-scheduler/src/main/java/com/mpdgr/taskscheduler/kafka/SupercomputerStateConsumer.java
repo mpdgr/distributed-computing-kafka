@@ -2,8 +2,8 @@ package com.mpdgr.taskscheduler.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mpdgr.taskscheduler.domain.SupercomputerState;
-import com.mpdgr.taskscheduler.domain.SupercomputerStateType;
+import com.mpdgr.commonrepo.domain.SupercomputerState;
+import com.mpdgr.commonrepo.enumeration.SupercomputerStateType;
 import com.mpdgr.taskscheduler.service.SuperComputerMonitor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

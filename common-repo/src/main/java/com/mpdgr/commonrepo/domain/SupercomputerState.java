@@ -1,9 +1,21 @@
 package com.mpdgr.commonrepo.domain;
 
 import com.mpdgr.commonrepo.enumeration.SupercomputerStateType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class SupercomputerState {
+@Getter
+@Setter
+public class SupercomputerState extends JobEvent{
     private SupercomputerStateType state;
+
+    public SupercomputerState() {
+        super("Supercomputer monitoring process");
+    }
+
+    public SupercomputerState(SupercomputerStateType state) {
+        super("Supercomputer monitoring process");
+        this.state = state;
+    }
 }
+
