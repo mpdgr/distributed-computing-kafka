@@ -40,5 +40,10 @@ logging:
 instance:
   properties:
     worker:
-      type: ${WORKER_TYPE}
-      delay: ${WORKER_DELAY}
+#      id: ${WORKER_ID}
+#      type: ${WORKER_TYPE}
+#      delay: ${WORKER_DELAY}
+      id: 1
+      type: ADDITION
+      reads-topic: addition
+      delay: 100

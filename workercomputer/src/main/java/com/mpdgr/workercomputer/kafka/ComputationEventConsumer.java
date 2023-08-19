@@ -3,23 +3,28 @@ package com.mpdgr.workercomputer.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
-import com.mpdgr.commonrepo.exception.ProgressReportMissingException;
+import com.mpdgr.commonrepo.exception.TaskMismatchException;
+import com.mpdgr.workercomputer.service.ComputationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ExecutionException;
+
 @Component
-@Slf4j
 @RequiredArgsConstructor
+@Slf4j
 public class ComputationEventConsumer {
     private final ObjectMapper mapper;
+    private final ComputationService computationService;
 
-    @KafkaListener(topics = {"${spring.kafka.topic.compute-task}"})
+    @KafkaListener(topics = {"${instance.properties.worker.reads-topic}"})
     public void onMessage(ConsumerRecord<String, String> record)
-            throws JsonProcessingException, ProgressReportMissingException {
+            throws JsonProcessingException, TaskMismatchException, InterruptedException, ExecutionException {
         log.debug("Event received: {}", record);
-        ComputationEvent event = mapper.readValue(record.value(), ComputationEvent.class);
+        ComputationEvent receivedEvent = mapper.readValue(record.value(), ComputationEvent.class);
+        ComputationEvent processedEvent = computationService.processEvent(receivedEvent);
     }
 }
