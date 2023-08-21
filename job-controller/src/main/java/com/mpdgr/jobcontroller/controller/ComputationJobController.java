@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class ComputationJobController {
-    private final JobManager processor;
+    private final JobManager jobManager;
 
     @PostMapping(path = "/compute")
     public ResponseEntity<ComputationJob> requestComputation(@RequestBody @Valid ComputationJob job) throws JsonProcessingException, ResultsRegistryException {
         log.info("Controller processing job started - {}", job);
-        processor.processJob(job);
+        jobManager.processJob(job);
         String success = "job accepted";
         return ResponseEntity.ok(job);
     }
