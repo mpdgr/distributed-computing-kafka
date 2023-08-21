@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TaskSchedulerService {
     private final JobsRegistry registry;
-    private final SuperComputerMonitor superComputerMonitor;
+    private final SuperWorkerMonitor superWorkerMonitor;
     private final TopicRouter topicRouter;
 
     //minimum nr of unprocessed tasks at which
@@ -31,11 +31,11 @@ public class TaskSchedulerService {
         }
 
         //assign task to one of standard workers or to the supercomputer
-        return qualifiesForSupercomputer(event) ? assignToSuperComputer(event) : assignToStandardWorker(event);
+        return qualifiesForSuperworker(event) ? assignToSuperworker(event) : assignToStandardWorker(event);
     }
 
 
-    private boolean qualifiesForSupercomputer(ComputationEvent event)
+    private boolean qualifiesForSuperworker(ComputationEvent event)
             throws ProgressReportMissingException {
 
         //check whether current workers' lag/delay at job execution exceeds min for supercomputer assistance
@@ -59,7 +59,7 @@ public class TaskSchedulerService {
 
         //check whether supercomputer is idle (new task can only be assigned if all current tasks are completed)
 
-        boolean supercomputerAvailable = superComputerMonitor.isIdle();
+        boolean supercomputerAvailable = superWorkerMonitor.isIdle();
         if (!supercomputerAvailable){
             log.info("Assistance required, but supercomputer not available");
             return false;
@@ -74,9 +74,9 @@ public class TaskSchedulerService {
         return event;
     }
 
-    private ComputationEvent assignToSuperComputer(ComputationEvent event) throws JsonProcessingException {
+    private ComputationEvent assignToSuperworker(ComputationEvent event) throws JsonProcessingException {
         log.info("Assigning event to supercomputer; event: {}", event);
-        topicRouter.sendToSupercomputer(event);
+        topicRouter.sendToSuperworker(event);
         return event;
     }
 }

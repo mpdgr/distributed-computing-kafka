@@ -21,8 +21,8 @@ public class TopicRouter {
     private String divisionTopic;
     @Value("${spring.kafka.topic.exponent}")
     private String exponentTopic;
-    @Value("${spring.kafka.topic.supercomputer}")
-    private String supercomputerTopic;
+    @Value("${spring.kafka.topic.superworker}")
+    private String superworkerTopic;
 
     void sendToStandardWorker(ComputationEvent event)
             throws JsonProcessingException {
@@ -36,8 +36,8 @@ public class TopicRouter {
         }
     }
 
-    void sendToSupercomputer(ComputationEvent event)
+    void sendToSuperworker(ComputationEvent event)
             throws JsonProcessingException {
-        producer.sendComputationEvent(event, supercomputerTopic);
+        producer.sendComputationEvent(event, superworkerTopic);
     }
 }

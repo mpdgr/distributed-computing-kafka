@@ -14,11 +14,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>common-repo</module>
         <module>job-controller</module>
         <module>task-scheduler</module>
-        <module>supercomputer</module>
-        <module>common-repo</module>
-        <module>workercomputer</module>
+        <module>standard-worker</module>
+        <module>super-worker</module>
     </modules>
 
     <properties>

@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common-repo" />
-        <module name="supercomputer" />
+        <module name="standard-worker" />
         <module name="job-controller" />
+        <module name="super-worker" />
         <module name="task-scheduler" />
-        <module name="workercomputer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +19,7 @@
       <module name="divider" target="17" />
       <module name="exponent" target="17" />
       <module name="multiplier" target="17" />
+      <module name="superworker" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -29,9 +30,10 @@
       <module name="exponent" options="-parameters" />
       <module name="job-controller" options="-parameters" />
       <module name="multiplier" options="-parameters" />
-      <module name="supercomputer" options="-parameters" />
+      <module name="standard-worker" options="-parameters" />
+      <module name="super-worker" options="-parameters" />
+      <module name="superworker" options="-parameters" />
       <module name="task-scheduler" options="-parameters" />
-      <module name="workercomputer" options="-parameters" />
     </option>
   </component>
 </project>

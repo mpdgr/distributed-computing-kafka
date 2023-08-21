@@ -22,11 +22,11 @@ public class KafkaTopicsConfig {
     private String division;
     @Value("${spring.kafka.topic.exponent}")
     private String exponent;
-    @Value("${spring.kafka.topic.supercomputer}")
-    private String supercomputer;
+    @Value("${spring.kafka.topic.superworker}")
+    private String superworker;
 
-    @Value("${spring.kafka.topic.supercomputer-state}")
-    private String supercomputerState;
+    @Value("${spring.kafka.topic.superworker-state}")
+    private String superworkerState;
 
     @Bean
     public NewTopic compute(){
@@ -90,10 +90,10 @@ public class KafkaTopicsConfig {
     }
 
     @Bean
-    public NewTopic supercomputer(){
-        log.info("Creating Kafka topic: {}", supercomputer);
+    public NewTopic superworker(){
+        log.info("Creating Kafka topic: {}", superworker);
         return TopicBuilder
-                .name(supercomputer)
+                .name(superworker)
                 .partitions(3)
                 .replicas(3)
                 .build();
@@ -101,10 +101,10 @@ public class KafkaTopicsConfig {
 
     //only one partition to keep track of message order
     @Bean
-    public NewTopic supercomputerState(){
-        log.info("Creating Kafka topic: {}", supercomputerState);
+    public NewTopic superworkerState(){
+        log.info("Creating Kafka topic: {}", superworkerState);
         return TopicBuilder
-                .name(supercomputerState)
+                .name(superworkerState)
                 .partitions(1)
                 .replicas(3)
                 .build();
