@@ -2,10 +2,9 @@ package com.mpdgr.jobcontroller.domain;
 
 import org.springframework.context.ApplicationEvent;
 
-public class JobCompletedEvent extends ApplicationEvent {
+public class JobCompleteEvent extends ApplicationEvent {
 
-
-    public JobCompletedEvent(Object source) {
+    public JobCompleteEvent(Object source) {
         super(source);
     }
 }

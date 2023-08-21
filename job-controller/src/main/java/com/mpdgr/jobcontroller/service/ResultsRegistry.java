@@ -3,6 +3,9 @@ package com.mpdgr.jobcontroller.service;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.domain.ComputationJob;
 import com.mpdgr.commonrepo.exception.ResultsRegistryException;
+import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEvent;
+import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventPublisher;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +30,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class ResultsRegistry {
+    private final JobCompleteEventPublisher eventsPublisher;
+
     private final Map<String, List<ComputationEvent>> completedEventsMap = new ConcurrentHashMap<>();
     private final Map<String, Long> jobSizes = new ConcurrentHashMap<>();
 
@@ -43,6 +49,7 @@ public class ResultsRegistry {
         log.debug("Completed task recorded for job id: {}", jobId);
         if(jobComplete(jobId, (long) completedForJob.size())){
             //produce completed event
+            produceJobCompleteEvent(event.getJobId());
         }
         return true;
     }
@@ -69,5 +76,10 @@ public class ResultsRegistry {
         completedEventsMap.put(jobId, new ArrayList<>());
         log.info("New job registered, job id: {}", jobId);
         return true;
+    }
+
+    private void produceJobCompleteEvent(String jobId){
+        eventsPublisher.publishJobCompletedEvent(
+                new JobCompleteEvent(this, jobId, completedEventsMap.get(jobId)));
     }
 }
