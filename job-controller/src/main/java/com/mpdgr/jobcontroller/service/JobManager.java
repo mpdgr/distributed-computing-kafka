@@ -7,7 +7,7 @@ import com.mpdgr.commonrepo.exception.ComputationSystemException;
 import com.mpdgr.commonrepo.exception.ResultsRegistryException;
 import com.mpdgr.jobcontroller.domain.JobCompleteSummary;
 import com.mpdgr.jobcontroller.kafka.ComputationEventProducer;
-import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEvent;
+import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +38,6 @@ public class JobManager {
         //register job
         resultsRegistry.registerJob(job);
 
-        long startTime = System.currentTimeMillis();
-
         //send events to process
         for (ComputationEvent event : jobEvents){
             log.debug("Sending event - job id: {}, task nr: {}, task type: {}",
@@ -60,6 +58,7 @@ public class JobManager {
                 }
             }
         };
+        //todo: test if controller is async
         return futureSummary.get();
     }
 }

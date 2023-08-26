@@ -26,6 +26,7 @@ public class ComputationEventProducer {
     @Value("${spring.kafka.topic.compute-task}")
     private String computeTopic;
 
+    //asynchronous producer //todo: test
     public CompletableFuture<SendResult<String, String>> sendComputationEvent(ComputationEvent event)
             throws JsonProcessingException {
         String key = event.getJobId();

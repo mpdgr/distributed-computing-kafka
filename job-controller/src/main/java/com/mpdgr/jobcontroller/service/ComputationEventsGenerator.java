@@ -33,7 +33,7 @@ public class ComputationEventsGenerator {
             events.get(i).setTaskNr(i + 1);
         }
 
-        log.info("Created events stream - job id: {}; events nr: {};", job.getJobId(), events.size());
+        log.info("Created events stream - job id: {}; events count: {};", job.getJobId(), events.size());
         return events;
     }
 

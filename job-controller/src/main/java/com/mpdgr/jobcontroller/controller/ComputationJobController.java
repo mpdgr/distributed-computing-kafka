@@ -22,9 +22,11 @@ public class ComputationJobController {
     private final JobManager jobManager;
 
     @PostMapping(path = "/compute")
-    public ResponseEntity<JobCompleteSummary> requestComputation(@RequestBody @Valid ComputationJob job) throws JsonProcessingException, ResultsRegistryException, ExecutionException, InterruptedException {
+    public ResponseEntity<JobCompleteSummary> requestComputation(@RequestBody @Valid ComputationJob job)
+            throws JsonProcessingException, ResultsRegistryException, ExecutionException, InterruptedException {
         log.info("Controller processing job started - {}", job);
         JobCompleteSummary jobResult = jobManager.processJob(job);
+        log.info("Processing job completed - {}", job);
         return ResponseEntity.ok(jobResult);
     }
 }

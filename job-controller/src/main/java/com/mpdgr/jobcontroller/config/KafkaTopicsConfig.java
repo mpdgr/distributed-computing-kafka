@@ -14,6 +14,7 @@ public class KafkaTopicsConfig {
     private String compute;
     @Value("${spring.kafka.topic.completed-task}")
     private String completed;
+
     @Value("${spring.kafka.topic.addition}")
     private String addition;
     @Value("${spring.kafka.topic.multiplication}")
@@ -22,9 +23,9 @@ public class KafkaTopicsConfig {
     private String division;
     @Value("${spring.kafka.topic.exponent}")
     private String exponent;
+
     @Value("${spring.kafka.topic.superworker}")
     private String superworker;
-
     @Value("${spring.kafka.topic.superworker-state}")
     private String superworkerState;
 

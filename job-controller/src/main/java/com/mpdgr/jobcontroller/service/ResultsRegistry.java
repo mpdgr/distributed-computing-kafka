@@ -3,7 +3,7 @@ package com.mpdgr.jobcontroller.service;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.domain.ComputationJob;
 import com.mpdgr.commonrepo.exception.ResultsRegistryException;
-import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEvent;
+import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,16 +39,22 @@ public class ResultsRegistry {
 
     boolean addCompletedEvent(ComputationEvent event) throws ResultsRegistryException {
         String jobId = event.getJobId();
+
+        //check if event belongs to registered job
         if (!completedEventsMap.containsKey(jobId)){
             throw new ResultsRegistryException(String
                     .format("Completed events map doesn't contain job key: %s", jobId));
         }
-        List<ComputationEvent> completedForJob = completedEventsMap.get(event.getJobId());
-        completedForJob.add(event);
-        completedEventsMap.put(event.getJobId(), completedForJob);
+
+        //add event to list of events completed so far
+        List<ComputationEvent> completedSoFar = completedEventsMap.get(event.getJobId());
+        completedSoFar.add(event);
+        completedEventsMap.put(event.getJobId(), completedSoFar);
+
         log.debug("Completed task recorded for job id: {}", jobId);
-        if(jobComplete(jobId, (long) completedForJob.size())){
-            //produce completed event
+
+        //check if job is complete - if so, produce adequate event
+        if(jobComplete(jobId, (long) completedSoFar.size())){
             produceJobCompleteEvent(event.getJobId());
         }
         return true;

@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class ComputationEventConsumer {
-    CompletedEventManager eventProcessor;
+    private final CompletedEventManager eventProcessor;
     private final ObjectMapper mapper;
 
-    @KafkaListener(topics = {"${instance.properties.worker.reads-topic}"})
+    @KafkaListener(topics = "${spring.kafka.topic.completed-task}")
     public void onMessage(ConsumerRecord<String, String> record)
             throws JsonProcessingException, ResultsRegistryException {
         log.debug("Event received: {}", record);

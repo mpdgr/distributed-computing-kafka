@@ -1,5 +1,6 @@
 package com.mpdgr.jobcontroller.service.jobcompletehandling;
 
+import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

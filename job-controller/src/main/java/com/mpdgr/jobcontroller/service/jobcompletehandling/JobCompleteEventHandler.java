@@ -2,6 +2,7 @@ package com.mpdgr.jobcontroller.service.jobcompletehandling;
 
 import com.mpdgr.commonrepo.domain.ComputationJob;
 import com.mpdgr.commonrepo.exception.ComputationSystemException;
+import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import com.mpdgr.jobcontroller.domain.JobCompleteSummary;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

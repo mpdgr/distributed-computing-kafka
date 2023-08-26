@@ -3,7 +3,6 @@ package com.mpdgr.jobcontroller.domain;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.enumeration.ComputationType;
 import com.mpdgr.commonrepo.enumeration.WorkerType;
-import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEvent;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +31,14 @@ public class JobCompleteSummary {
     private Map<String, Integer> allWorkersSummary = new HashMap<>();
 
     //tasks completed by superworker
-    private Map<ComputationType, Integer> superworkersSummary = new HashMap<>();
+    private Map<ComputationType, Integer> superworkerSummary = new HashMap<>();
 
     //init superworkersSummary hashmap
     {
-        superworkersSummary.put(ComputationType.ADDITION, 0);
-        superworkersSummary.put(ComputationType.MULTIPLICATION, 0);
-        superworkersSummary.put(ComputationType.DIVISION, 0);
-        superworkersSummary.put(ComputationType.EXPONENT, 0);
+        superworkerSummary.put(ComputationType.ADDITION, 0);
+        superworkerSummary.put(ComputationType.MULTIPLICATION, 0);
+        superworkerSummary.put(ComputationType.DIVISION, 0);
+        superworkerSummary.put(ComputationType.EXPONENT, 0);
     }
 
     public JobCompleteSummary(@NonNull String jobId) {
@@ -90,7 +89,7 @@ public class JobCompleteSummary {
     private void registerSuperworkerTask(ComputationEvent event){
         if (event.getWorkerType() == WorkerType.SUPER){
             //increment nr of tasks of given type completed by superworker
-            superworkersSummary.put(event.getTask().getType(), superworkersSummary.get(event.getTask().getType()) + 1);
+            superworkerSummary.put(event.getTask().getType(), superworkerSummary.get(event.getTask().getType()) + 1);
         }
     }
 
