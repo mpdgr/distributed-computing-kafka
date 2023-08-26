@@ -24,7 +24,7 @@ public class ComputationEventProducer {
     private final ObjectMapper mapper;
 
     @Value("${spring.kafka.topic.compute-task}")
-    private final String computeTopic;
+    private String computeTopic;
 
     //asynchronous producer //todo: test
     public CompletableFuture<SendResult<String, String>> sendComputationEvent(ComputationEvent event)

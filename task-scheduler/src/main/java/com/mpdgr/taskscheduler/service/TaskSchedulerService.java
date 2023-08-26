@@ -17,7 +17,7 @@ public class TaskSchedulerService {
     private final TopicRouter topicRouter;
 
     /* minimum nr of unprocessed tasks at which the worker qualifies for superworker assistance */
-    @Value("${computing.properties.assist}:2")
+    @Value("${computing.properties.assist:2}")
     private Integer minLag;
 
 

@@ -29,7 +29,12 @@ spring:
       exponent: exponent
       superworker: superworker
       superworker-state: superworker-state
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: jobcontroller
 logging:
   level:
     root: info
     com.mpdgr: debug
+instance.properties.worker.id: 8

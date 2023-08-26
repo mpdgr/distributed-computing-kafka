@@ -23,7 +23,7 @@ public class ComputationEventProducer {
     private final ObjectMapper mapper;
 
     @Value("${spring.kafka.topic.completed-task}")
-    private final String completedTopic;
+    private String completedTopic;
 
     public ComputationEventProducer(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper mapper, String completedTopic) {
         this.kafkaTemplate = kafkaTemplate;
