@@ -18,9 +18,9 @@ public class SuperworkerStateConsumer {
     private final SuperWorkerMonitor superWorkerMonitor;
     private final ObjectMapper mapper;
 
-    @KafkaListener(topics = {"${spring.kafka.topic.supercomputer-state}"})
+    @KafkaListener(topics = {"${spring.kafka.topic.superworker-state}"})
     public void onMessage(ConsumerRecord<String, String> record) throws JsonProcessingException {
-        log.trace("Supercomputer state recorded: {}", record);
+        log.trace("Superworker state recorded: {}", record);
         SuperworkerState state = mapper.readValue(record.value(), SuperworkerState.class);
         superWorkerMonitor.setIdle(state.getState() == SuperworkerStateType.IDLE);
     }

@@ -62,11 +62,8 @@ public class ProgressReport {
 
     int getMaxLagValue() {
         return Collections.max(
-                List.of(additionLag(),
-                        multiplicationLag(),
-                        divisionLag(),
-                        exponentLag()),
-                (x, y) -> x - y);
+                List.of(additionLag(), multiplicationLag(), divisionLag(), exponentLag()),
+                (x, y) -> x - y);  //todo: test
     }
 
     ComputationType getMaxLaggingOperation() {

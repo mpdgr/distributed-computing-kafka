@@ -31,12 +31,11 @@ spring:
       multiplication: multiplication
       division: division
       exponent: exponent
-      supercomputer: supercomputer
+      superworker: superworker
 logging:
   level:
     root: info
     com.mpdgr: debug
-
 instance:
   properties:
     worker:
@@ -47,4 +46,4 @@ instance:
       type: ADDITION
       reads-topic: addition
       delay: 100
-      supercomputer: false
+      superworker: false

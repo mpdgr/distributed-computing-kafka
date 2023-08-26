@@ -31,7 +31,7 @@ spring:
       multiplication: multiplication
       division: division
       exponent: exponent
-      supercomputer: supercomputer
+      superworker: superworker
 logging:
   level:
     root: info
@@ -44,7 +44,7 @@ instance:
 #      type: ${WORKER_TYPE}
 #      delay: ${WORKER_DELAY}
       id: 1
-      type: ADDITION
-      reads-topic: addition
+      type: super
+      reads-topic: superworker
       delay: 100
-      supercomputer: false
+      superworker: true

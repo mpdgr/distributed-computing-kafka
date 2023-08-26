@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ComputationService {
+public class ComputingService {
     private final Computer computer;
     private final ComputationType type;
     private final String workerId = WorkerProperties.getWorkerId();
@@ -25,16 +25,16 @@ public class ComputationService {
 
     public ComputationEvent processEvent(ComputationEvent event)
             throws InterruptedException, TaskMismatchException, JsonProcessingException, ExecutionException {
-        //resolve task
+        /* resolve task */
         ComputationTask resolved = computer.resolveTask(event.getTask());
 
-        //sign
+        /* sign */
         event.setWorkerId(workerId);
         log.debug("Resolved task: job: {}, task nr: {}, worker type: {}, worker id: {}",
                 event.getJobId(), event.getTaskNr(), event.getTask().getType(), event.getWorkerId());
 
-        //send to completed topic
+        /* send to completed topic */
         eventProducer.sendComputationEventSynchronous(event);
         return event;
-    };
+    }
 }

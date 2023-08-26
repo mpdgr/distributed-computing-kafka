@@ -26,13 +26,14 @@ public class WorkerProperties {
     @Value("${instance.properties.worker.type}")
     private static ComputationType type;
 
-    //delay is set for worker instance to slow down computation to test different kafka configs
+    /* delay is set for worker instance to slow down computation to test different kafka configs */
     @Value("${instance.properties.worker.delay:0}")
     private static long COMPUTATION_DELAY;
 
     @Value("${instance.properties.worker.id}")
     private static String WORKER_ID;
 
+    /* basing on properties certain type of worker is instantiated */
     @Bean
     public Computer assignWorkerType() {
         log.info("Assigning worker type: {}", type.toString().toUpperCase());

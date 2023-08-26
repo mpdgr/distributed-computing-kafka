@@ -16,31 +16,34 @@ public class TaskSchedulerService {
     private final SuperWorkerMonitor superWorkerMonitor;
     private final TopicRouter topicRouter;
 
-    //minimum nr of unprocessed tasks at which
-    // the worker qualifies for supercomputer assistance
-    @Value("${computing.properties.minlagassist}:2")
+    /* minimum nr of unprocessed tasks at which the worker qualifies for superworker assistance */
+    @Value("${computing.properties.assist}:2")
     private Integer minLag;
 
 
     public ComputationEvent scheduleTask(ComputationEvent event)
             throws ProgressReportMissingException, JsonProcessingException {
-        //check whether incoming task belongs to any of the registered jobs, if not add a new job
+
+        /* check whether incoming task belongs to any of the jobs registered by scheduler */
         boolean isRegistered = registry.jobRegistered(event);
         if (!isRegistered) {
             registry.registerJob(event);
         }
 
-        //assign task to one of standard workers or to the supercomputer
-        return qualifiesForSuperworker(event) ? assignToSuperworker(event) : assignToStandardWorker(event);
+        /* assign task to one of standard workers or to the superworker */
+        return qualifiesForSuperworker(event) ?
+                assignToSuperworker(event) : assignToStandardWorker(event);
     }
 
 
     private boolean qualifiesForSuperworker(ComputationEvent event)
             throws ProgressReportMissingException {
 
-        //check whether current workers' lag/delay at job execution exceeds min for supercomputer assistance
+        /* check whether current workers' lag/delay at job execution
+        exceeds min for superworker assistance */
 
         ProgressReport report = registry.getProgressReport(event.getJobId());
+
         if (report == null) {
             throw new ProgressReportMissingException("Progress report is null");
         }
@@ -50,18 +53,18 @@ public class TaskSchedulerService {
             return false;
         }
 
-        //check whether this task type is the one with highest lag/delay
-
+        /* check whether this task type is the one with the highest lag/delay */
         boolean assistanceRequiredAtThisTask = (report.getMaxLaggingOperation() == event.getTask().getType());
         if (!assistanceRequiredAtThisTask){
             return false;
         }
 
-        //check whether supercomputer is idle (new task can only be assigned if all current tasks are completed)
+        /* check whether superworker is idle
+        (new task can only be assigned if all current tasks of superworker are completed) */
+        boolean superworkerAvailable = superWorkerMonitor.isIdle();
 
-        boolean supercomputerAvailable = superWorkerMonitor.isIdle();
-        if (!supercomputerAvailable){
-            log.info("Assistance required, but supercomputer not available");
+        if (!superworkerAvailable){
+            log.info("Assistance required, but superworker not available");
             return false;
         }
 
@@ -75,7 +78,7 @@ public class TaskSchedulerService {
     }
 
     private ComputationEvent assignToSuperworker(ComputationEvent event) throws JsonProcessingException {
-        log.info("Assigning event to supercomputer; event: {}", event);
+        log.info("Assigning event to superworker; event: {}", event);
         topicRouter.sendToSuperworker(event);
         return event;
     }

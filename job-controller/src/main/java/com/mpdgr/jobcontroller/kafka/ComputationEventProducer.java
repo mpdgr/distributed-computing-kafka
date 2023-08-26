@@ -24,13 +24,13 @@ public class ComputationEventProducer {
     private final ObjectMapper mapper;
 
     @Value("${spring.kafka.topic.compute-task}")
-    private String computeTopic;
+    private final String computeTopic;
 
     //asynchronous producer //todo: test
     public CompletableFuture<SendResult<String, String>> sendComputationEvent(ComputationEvent event)
             throws JsonProcessingException {
         String key = event.getJobId();
-        String value = mapper.writeValueAsString(event.getTask());
+        String value = mapper.writeValueAsString(event);
         ProducerRecord<String, String> record = buildRecord(computeTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);
         return resultFuture.whenComplete(new SendResultBiConsumer<>(event));

@@ -30,14 +30,14 @@ public class ComputationEventProducer {
     public SendResult<String, String> sendComputationEventSynchronous(ComputationEvent event)
             throws JsonProcessingException, ExecutionException, InterruptedException {
         String key = event.getJobId();
-        String value = mapper.writeValueAsString(event.getTask());
+        String value = mapper.writeValueAsString(event);
         ProducerRecord<String, String> record = buildRecord(completedTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);
         return resultFuture.get();
     }
 
     private ProducerRecord<String, String> buildRecord(String topic, String key, String value){
-        Header source = new RecordHeader("event-source", "supercomputer".getBytes());
+        Header source = new RecordHeader("event-source", "superworker".getBytes());
         Header type = new RecordHeader("event-type", "computation-event".getBytes());
         return new ProducerRecord<>(topic, null, key, value, List.of(source, type));
     }

@@ -27,8 +27,8 @@ spring:
       multiplication: multiplication
       division: division
       exponent: exponent
-      supercomputer: supercomputer
-      supercomputer-state: supercomputer-state
+      superworker: superworker
+      superworker-state: superworker-state
 logging:
   level:
     root: info

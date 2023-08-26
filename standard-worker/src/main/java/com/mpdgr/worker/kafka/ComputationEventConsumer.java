@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.exception.TaskMismatchException;
-import com.mpdgr.worker.service.ComputationService;
+import com.mpdgr.worker.service.ComputingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -18,14 +18,14 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class ComputationEventConsumer {
     private final ObjectMapper mapper;
-    private final ComputationService computationService;
+    private final ComputingService computingService;
 
     @KafkaListener(topics = {"${instance.properties.worker.reads-topic}"})
     public void onMessage(ConsumerRecord<String, String> record)
             throws JsonProcessingException, TaskMismatchException, InterruptedException, ExecutionException {
         log.debug("Event received: {}", record);
         ComputationEvent receivedEvent = mapper.readValue(record.value(), ComputationEvent.class);
-        ComputationEvent processedEvent = computationService.processEvent(receivedEvent);
+        ComputationEvent processedEvent = computingService.processEvent(receivedEvent);
         log.debug("Event processed: {}", processedEvent);
     }
 }

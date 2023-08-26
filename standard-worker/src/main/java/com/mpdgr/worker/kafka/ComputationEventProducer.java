@@ -7,8 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.internals.RecordHeader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
@@ -23,13 +22,13 @@ public class ComputationEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
-    @Autowired
-    @Qualifier("completed-tasks-topic")
-    private String completedTopic;
+    @Value("${spring.kafka.topic.completed-task}")
+    private final String completedTopic;
 
-    public ComputationEventProducer(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper mapper) {
+    public ComputationEventProducer(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper mapper, String completedTopic) {
         this.kafkaTemplate = kafkaTemplate;
         this.mapper = mapper;
+        this.completedTopic = completedTopic;
     }
 
     public SendResult<String, String> sendComputationEventSynchronous(ComputationEvent event)
@@ -38,7 +37,8 @@ public class ComputationEventProducer {
         String value = mapper.writeValueAsString(event.getTask());
         ProducerRecord<String, String> record = buildRecord(completedTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);
-        return resultFuture.get(); //.get() to keep the producer blocking until sent
+        return resultFuture.get();
+        //.get() to keep the producer blocking until sent todo: test
     }
 
     private ProducerRecord<String, String> buildRecord(String topic, String key, String value){

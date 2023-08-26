@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Supercomputer can do any of operations depending on task assignment so it can support other instances of:
+ * Superworker can do any of operations depending on task assignment so it can support other instances of:
  * - adder or
  * - multiplier or
  * - divider or
  * - exponent
- * Like other workers supercomputer is intended to work single-threaded working on one event at a time
+ * Like other workers superworker is intended to work single-threaded working on one event at a time
  */
 
 @Configuration

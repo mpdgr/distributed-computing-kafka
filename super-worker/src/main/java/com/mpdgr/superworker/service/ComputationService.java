@@ -18,18 +18,17 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 @Slf4j
 public class ComputationService {
-    private final Computer computer;
-    private final ComputationType type;
     private final String workerId = WorkerProperties.getWorkerId();
     private final long workerDelay = WorkerProperties.getComputationDelay();
     private final ComputationEventProducer eventProducer;
 
     public ComputationEvent processEvent(ComputationEvent event)
             throws InterruptedException, TaskMismatchException, JsonProcessingException, ExecutionException {
-        ComputationType type = event.getTask().getType();
 
+        ComputationType type = event.getTask().getType();
         log.info("Assigning worker type: {}", type.toString().toUpperCase());
         log.info("Assigning worker delay: {} ms", workerDelay);
+
         Computer computer =
                 switch (type) {
                     case ADDITION -> new Adder(workerDelay);
@@ -43,7 +42,7 @@ public class ComputationService {
 
         //sign
         event.setWorkerId(workerId);
-        log.debug("Resolved task: job: {}, task nr: {}, worker type: SUPERCOMPUTER, worker id: {}",
+        log.debug("Resolved task: job: {}, task nr: {}, worker type: SUPERWORKER, worker id: {}",
                 event.getJobId(), event.getTaskNr(), event.getWorkerId());
 
         //send to completed topic

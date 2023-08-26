@@ -13,7 +13,7 @@ public class KafkaConfig {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
         factory.setConcurrency(1); //consumer is intended to work single-threaded/ blocking
-        factory.afterPropertiesSet();
+        factory.afterPropertiesSet();  //todo: acknowledment impl?
         return factory;
     }
 }

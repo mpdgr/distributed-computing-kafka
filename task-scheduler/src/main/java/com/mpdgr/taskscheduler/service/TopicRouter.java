@@ -14,15 +14,15 @@ public class TopicRouter {
     private final ComputationEventProducer producer;
 
     @Value("${spring.kafka.topic.addition}")
-    private String additionTopic;
+    private final String additionTopic;
     @Value("${spring.kafka.topic.multiplication}")
-    private String multiplicationTopic;
+    private final String multiplicationTopic;
     @Value("${spring.kafka.topic.division}")
-    private String divisionTopic;
+    private final String divisionTopic;
     @Value("${spring.kafka.topic.exponent}")
-    private String exponentTopic;
+    private final String exponentTopic;
     @Value("${spring.kafka.topic.superworker}")
-    private String superworkerTopic;
+    private final String superworkerTopic;
 
     void sendToStandardWorker(ComputationEvent event)
             throws JsonProcessingException {

@@ -24,7 +24,7 @@ public class SuperworkerStateProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
-    @Value("${spring.kafka.topic.supercomputer-state}")
+    @Value("${spring.kafka.topic.superworker-state}")
     private String stateTopic;
 
     public CompletableFuture<SendResult<String, String>> sendSuperworkerState(SuperworkerState stateEvent)
@@ -37,7 +37,7 @@ public class SuperworkerStateProducer {
     }
 
     private ProducerRecord<String, String> buildRecord(String topic, String key, String value){
-        Header source = new RecordHeader("event-source", "supercomputer".getBytes());
+        Header source = new RecordHeader("event-source", "superworker".getBytes());
         Header type = new RecordHeader("event-type", "state-event".getBytes());
         return new ProducerRecord<>(topic, null, key, value, List.of(source, type));
     }
