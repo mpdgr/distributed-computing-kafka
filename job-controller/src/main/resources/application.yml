@@ -10,7 +10,7 @@ spring:
     activate:
       on-profile: local
   kafka:
-    bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+    bootstrap-servers: kafka_broker_1:9092, kafka_broker_2:9093, kafka_broker_3:9094
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -36,5 +36,5 @@ spring:
 logging:
   level:
     root: info
-    com.mpdgr: debug
+    com.mpdgr: trace
 instance.properties.worker.id: 8

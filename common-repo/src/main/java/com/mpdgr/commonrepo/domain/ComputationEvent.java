@@ -17,4 +17,14 @@ public class ComputationEvent extends JobEvent{
     public ComputationEvent(String jobId) {
         super(jobId);
     }
+
+    public ComputationEvent(String jobId, String workerId,
+                            WorkerType workerType, int taskNr,
+                            ComputationTask task) {
+        super(jobId);
+        this.workerId = workerId;
+        this.workerType = workerType;
+        this.taskNr = taskNr;
+        this.task = task;
+    }
 }

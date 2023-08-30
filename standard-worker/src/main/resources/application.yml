@@ -10,7 +10,7 @@ spring:
     activate:
       on-profile: local
   kafka:
-    bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+    bootstrap-servers: kafka_broker_1:9092, kafka_broker_2:9093, kafka_broker_3:9094
 #    producer:
 #      key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #      value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -39,11 +39,8 @@ logging:
 instance:
   properties:
     worker:
-      id: 1
-#      id: ${WORKER_ID}
-#      type: ${WORKER_TYPE}
-#      delay: ${WORKER_DELAY}
-      type: ADDITION
-      reads-topic: addition
-      delay: 100
+      id: ${WORKER_ID}
+      type: ${WORKER_TYPE}
+      delay: ${WORKER_DELAY}
+      reads-topic: ${READS_TOPIC}
       superworker: false

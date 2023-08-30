@@ -24,37 +24,29 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class WorkerProperties {
     @Value("${instance.properties.worker.type}")
-    private static ComputationType type;
+    private ComputationType type;
 
     /* delay is set for worker instance to slow down computation to test different kafka configs */
     @Value("${instance.properties.worker.delay:0}")
-    private static long COMPUTATION_DELAY;
+    private long computationDelay;
 
     @Value("${instance.properties.worker.id}")
-    private static String WORKER_ID;
+    private String workerId;
 
     /* basing on properties certain type of worker is instantiated */
     @Bean
     public Computer assignWorkerType() {
         log.info("Assigning worker type: {}", type.toString().toUpperCase());
-        log.info("Assigning worker delay: {} ms", COMPUTATION_DELAY);
+        log.info("Assigning worker delay: {} ms", computationDelay);
         return switch (type) {
-            case ADDITION -> new Adder(COMPUTATION_DELAY);
-            case DIVISION -> new Divider(COMPUTATION_DELAY);
-            case EXPONENT -> new Exponent(COMPUTATION_DELAY);
-            case MULTIPLICATION -> new Multiplier(COMPUTATION_DELAY);
+            case ADDITION -> new Adder(computationDelay);
+            case DIVISION -> new Divider(computationDelay);
+            case EXPONENT -> new Exponent(computationDelay);
+            case MULTIPLICATION -> new Multiplier(computationDelay);
         };
     }
 
-    public static ComputationType getType() {
-        return type;
-    }
-
-    public static long getComputationDelay() {
-        return COMPUTATION_DELAY;
-    }
-
-    public static String getWorkerId() {
-        return WORKER_ID;
+    public String getWorkerId() {
+        return workerId;
     }
 }

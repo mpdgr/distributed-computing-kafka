@@ -25,16 +25,16 @@ public class ComputationEventProducer {
     @Value("${spring.kafka.topic.completed-task}")
     private String completedTopic;
 
-    public ComputationEventProducer(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper mapper, String completedTopic) {
+    public ComputationEventProducer(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper mapper) {
         this.kafkaTemplate = kafkaTemplate;
         this.mapper = mapper;
-        this.completedTopic = completedTopic;
     }
 
     public SendResult<String, String> sendComputationEventSynchronous(ComputationEvent event)
             throws JsonProcessingException, ExecutionException, InterruptedException {
         String key = event.getJobId();
-        String value = mapper.writeValueAsString(event.getTask());
+        log.debug("Sending computation results, job id: {}", key);
+        String value = mapper.writeValueAsString(event);
         ProducerRecord<String, String> record = buildRecord(completedTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);
         return resultFuture.get();

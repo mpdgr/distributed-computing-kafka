@@ -21,16 +21,16 @@ public class WorkerProperties {
 
     //delay is set for worker instance to slow down computation to test different kafka configs
     @Value("${instance.properties.worker.delay:0}")
-    private static long COMPUTATION_DELAY;
+    private long computationDelay;
 
     @Value("${instance.properties.worker.id}")
-    private static String WORKER_ID;
+    private String workerId;
 
-    public static long getComputationDelay() {
-        return COMPUTATION_DELAY;
+    public long getComputationDelay() {
+        return computationDelay;
     }
 
-    public static String getWorkerId() {
-        return WORKER_ID;
+    public String getWorkerId() {
+        return workerId;
     }
 }

@@ -39,6 +39,7 @@ public class ResultsRegistry {
 
     boolean addCompletedEvent(ComputationEvent event) throws ResultsRegistryException {
         String jobId = event.getJobId();
+        log.trace("Registry processing event, job ID: {}", jobId);
 
         //check if event belongs to registered job
         if (!completedEventsMap.containsKey(jobId)){
@@ -85,6 +86,7 @@ public class ResultsRegistry {
     }
 
     private void produceJobCompleteEvent(String jobId){
+        log.debug("Sending job complete event for job id: {}", jobId);
         eventsPublisher.publishJobCompletedEvent(
                 new JobCompleteEvent(this, jobId, completedEventsMap.get(jobId)));
     }

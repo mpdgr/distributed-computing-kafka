@@ -18,8 +18,7 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 @Slf4j
 public class ComputationService {
-    private final String workerId = WorkerProperties.getWorkerId();
-    private final long workerDelay = WorkerProperties.getComputationDelay();
+    private final WorkerProperties properties;
     private final ComputationEventProducer eventProducer;
 
     public ComputationEvent processEvent(ComputationEvent event)
@@ -27,21 +26,21 @@ public class ComputationService {
 
         ComputationType type = event.getTask().getType();
         log.info("Assigning worker type: {}", type.toString().toUpperCase());
-        log.info("Assigning worker delay: {} ms", workerDelay);
+        log.info("Assigning worker delay: {} ms", properties.getComputationDelay());
 
         Computer computer =
                 switch (type) {
-                    case ADDITION -> new Adder(workerDelay);
-                    case DIVISION -> new Divider(workerDelay);
-                    case EXPONENT -> new Exponent(workerDelay);
-                    case MULTIPLICATION -> new Multiplier(workerDelay);
+                    case ADDITION -> new Adder(properties.getComputationDelay());
+                    case DIVISION -> new Divider(properties.getComputationDelay());
+                    case EXPONENT -> new Exponent(properties.getComputationDelay());
+                    case MULTIPLICATION -> new Multiplier(properties.getComputationDelay());
                 };
 
         //resolve task
         ComputationTask resolved = computer.resolveTask(event.getTask());
 
         //sign
-        event.setWorkerId(workerId);
+        event.setWorkerId(properties.getWorkerId());
         log.debug("Resolved task: job: {}, task nr: {}, worker type: SUPERWORKER, worker id: {}",
                 event.getJobId(), event.getTaskNr(), event.getWorkerId());
 

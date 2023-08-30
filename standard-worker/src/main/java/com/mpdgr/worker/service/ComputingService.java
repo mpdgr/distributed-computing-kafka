@@ -19,8 +19,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class ComputingService {
     private final Computer computer;
-    private final ComputationType type;
-    private final String workerId = WorkerProperties.getWorkerId();
+    private final WorkerProperties properties;
     private final ComputationEventProducer eventProducer;
 
     public ComputationEvent processEvent(ComputationEvent event)
@@ -29,7 +28,7 @@ public class ComputingService {
         ComputationTask resolved = computer.resolveTask(event.getTask());
 
         /* sign */
-        event.setWorkerId(workerId);
+        event.setWorkerId(properties.getWorkerId());
         log.debug("Resolved task: job: {}, task nr: {}, worker type: {}, worker id: {}",
                 event.getJobId(), event.getTaskNr(), event.getTask().getType(), event.getWorkerId());
 

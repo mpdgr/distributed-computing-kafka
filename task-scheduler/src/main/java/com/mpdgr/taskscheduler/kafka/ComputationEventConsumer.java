@@ -23,6 +23,7 @@ public class ComputationEventConsumer {
             throws JsonProcessingException, ProgressReportMissingException {
         log.debug("Event received: {}", record);
         ComputationEvent event = mapper.readValue(record.value(), ComputationEvent.class);
+        log.trace("Event mapped, id: {}", event.getJobId());
         service.scheduleTask(event);
     }
 }

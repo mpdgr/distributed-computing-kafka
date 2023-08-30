@@ -9,6 +9,7 @@ import com.mpdgr.jobcontroller.domain.JobCompleteSummary;
 import com.mpdgr.jobcontroller.kafka.ComputationEventProducer;
 import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventHandler;
+import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -26,6 +27,7 @@ public class JobManager {
     private final ComputationEventProducer producer;
     private final ResultsRegistry resultsRegistry;
     private final JobCompleteEventHandler jobCompleteEventHandler;
+    private final JobCompleteEventPublisher eventsPublisher;
 
     public JobCompleteSummary processJob (ComputationJob job) throws JsonProcessingException, ResultsRegistryException, ExecutionException, InterruptedException {
         //create events list
@@ -58,6 +60,10 @@ public class JobManager {
                 }
             }
         };
+        //todo: connect listener to publisher
+
+
+
         //todo: test if controller is async
         return futureSummary.get();
     }
