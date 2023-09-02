@@ -86,7 +86,7 @@ public class ResultsRegistry {
     }
 
     private void produceJobCompleteEvent(String jobId){
-        log.debug("Sending job complete event for job id: {}", jobId);
+        log.debug("Publishing job complete event, job id: {}", jobId);
         eventsPublisher.publishJobCompletedEvent(
                 new JobCompleteEvent(this, jobId, completedEventsMap.get(jobId)));
     }

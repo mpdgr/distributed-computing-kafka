@@ -7,12 +7,12 @@ import com.mpdgr.jobcontroller.domain.JobCompleteSummary;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
 public class JobCompleteEventHandler {
     public JobCompleteSummary handleJobCompleted(ComputationJob computationJob, JobCompleteEvent completeEvent)
             throws ComputationSystemException {
 
+        log.debug("Handling job completed, job: {}, event {}", computationJob, completeEvent);
         log.info("Handling job completed, id {}", completeEvent.getJobId());
         JobCompleteSummary jobSummary = new JobCompleteSummary(completeEvent.getJobId());
         jobSummary.processJobCompleteEvent(completeEvent, computationJob.getStartTime());

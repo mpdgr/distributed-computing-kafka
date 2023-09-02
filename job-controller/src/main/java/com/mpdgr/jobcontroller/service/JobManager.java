@@ -9,10 +9,14 @@ import com.mpdgr.jobcontroller.domain.JobCompleteSummary;
 import com.mpdgr.jobcontroller.kafka.ComputationEventProducer;
 import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventHandler;
+import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventHandlingConfig;
+import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventListener;
 import com.mpdgr.jobcontroller.service.jobcompletehandling.JobCompleteEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,18 +24,32 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@Scope("prototype")
 @RequiredArgsConstructor
 @Slf4j
 public class JobManager {
     private final ComputationEventsGenerator eventsGenerator;
     private final ComputationEventProducer producer;
     private final ResultsRegistry resultsRegistry;
-    private final JobCompleteEventHandler jobCompleteEventHandler;
-    private final JobCompleteEventPublisher eventsPublisher;
+//    private final JobCompleteEventListener eventsListener;
+    private final JobCompleteEventHandlingConfig config;
 
-    public JobCompleteSummary processJob (ComputationJob job) throws JsonProcessingException, ResultsRegistryException, ExecutionException, InterruptedException {
+    public JobCompleteSummary processJob (ComputationJob job)
+            throws JsonProcessingException, ResultsRegistryException,
+            ExecutionException, InterruptedException {
+
         //create events list
         List<ComputationEvent> jobEvents = eventsGenerator.createEventList(job);
+
+        //initialize event listener waiting for computation process to finish
+        CompletableFuture<JobCompleteSummary> futureSummary = new CompletableFuture<>();
+        config.registerJobCompleteEventListener(job, futureSummary);
+//        eventsListener.setJob(job);
+//        eventsListener.setJobId(job.getJobId());
+//        log.debug("Setting job for app listener, job: {}", job.getJobId());
+//        eventsListener.setFutureSummary(futureSummary);
+//        log.debug("Setting future summary, job: {}", job.getJobId());
+//        eventsListener.logJob();
 
         //log start
         log.info("Started processing job id: {}; nr of tasks: {};", job.getJobId(), job.getJobSize());
@@ -47,19 +65,21 @@ public class JobManager {
             producer.sendComputationEvent(event);
         }
 
-        CompletableFuture<JobCompleteSummary> futureSummary = new CompletableFuture<>();
+//        eventsListener.logJob();
 
         //initialize event listener waiting for computation process to finish
-        ApplicationListener<JobCompleteEvent> resultsListener = event -> {
-            if (event.getJobId().equals(job.getJobId())){
-                try {
-                    futureSummary.complete(jobCompleteEventHandler.handleJobCompleted(job, event));
-                } catch (ComputationSystemException e) {
-                    log.error(e.getMessage());
-                    throw new RuntimeException(e);
-                }
-            }
-        };
+
+
+//        ApplicationListener<JobCompleteEvent> resultsListener = event -> {
+//            if (event.getJobId().equals(job.getJobId())){
+//                try {
+//                    futureSummary.complete(jobCompleteEventHandler.handleJobCompleted(job, event));
+//                } catch (ComputationSystemException e) {
+//                    log.error(e.getMessage());
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        };
         //todo: connect listener to publisher
 
 
