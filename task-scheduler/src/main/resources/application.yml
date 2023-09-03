@@ -26,7 +26,7 @@ spring:
 #        client.id: adm
     topic:
       compute-task: compute-task
-#      completed-task: completed-task
+      completed-task: completed-task
       addition: addition
       multiplication: multiplication
       division: division

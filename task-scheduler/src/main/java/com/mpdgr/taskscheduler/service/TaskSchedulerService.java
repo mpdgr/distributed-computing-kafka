@@ -30,6 +30,9 @@ public class TaskSchedulerService {
             registry.registerJob(event);
         }
 
+        /* log the task as scheduled in the report  */
+        logTaskInReport(event);
+
         /* assign task to one of standard workers or to the superworker */
         return qualifiesForSuperworker(event) ?
                 assignToSuperworker(event) : assignToStandardWorker(event);
@@ -72,6 +75,16 @@ public class TaskSchedulerService {
         }
 
         return true;
+    }
+
+    private void logTaskInReport(ComputationEvent event){
+        ProgressReport report = registry.getProgressReport(event.getJobId());
+        switch (event.getTask().getType()){
+            case ADDITION -> report.registerScheduledAddition();
+            case MULTIPLICATION -> report.registerScheduledMultiplication();
+            case DIVISION -> report.registerScheduledDivision();
+            case EXPONENT -> report.registerScheduledExponent();
+        }
     }
 
     private ComputationEvent assignToStandardWorker(ComputationEvent event) throws JsonProcessingException {
