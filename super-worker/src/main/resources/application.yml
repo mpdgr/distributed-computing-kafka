@@ -11,15 +11,16 @@ spring:
       on-profile: local
   kafka:
     bootstrap-servers: kafka_broker_1:9092, kafka_broker_2:9093, kafka_broker_3:9094
-#    producer:
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      linger-ms: 0
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: superworker
-#    properties:
-#      acks: -1  #todo: chyba nie działa
+    properties:
+      acks: 1
 #      retries: 50
 #    admin:
 #      properties:
@@ -36,16 +37,17 @@ spring:
 logging:
   level:
     root: info
-    com.mpdgr: debug
+    com.mpdgr: trace
 
 instance:
   properties:
     worker:
-#      id: ${WORKER_ID}
-#      type: ${WORKER_TYPE}
-#      delay: ${WORKER_DELAY}
-      id: 1
-      type: super
-      reads-topic: superworker
-      delay: 100
-      superworker: true
+      id: ${WORKER_ID}
+      type: ${WORKER_TYPE}
+      delay: ${WORKER_DELAY}
+      reads-topic: ${READS_TOPIC}
+#      id: 1
+#      type: super
+#      reads-topic: superworker
+#      delay: 100
+#      superworker: true

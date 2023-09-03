@@ -55,9 +55,10 @@ public class ResultsRegistry {
         log.debug("Completed task recorded for job id: {}", jobId);
 
         //check if job is complete - if so, produce adequate event
-        if(jobComplete(jobId, (long) completedSoFar.size())){
+        if (jobComplete(jobId, (long) completedSoFar.size())) {
             produceJobCompleteEvent(event.getJobId());
         }
+
         return true;
     }
 

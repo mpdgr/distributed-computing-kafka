@@ -1,6 +1,7 @@
 package com.mpdgr.worker.config;
 
 import com.mpdgr.commonrepo.enumeration.ComputationType;
+import com.mpdgr.commonrepo.enumeration.WorkerType;
 import com.mpdgr.worker.service.computer.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,10 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class WorkerProperties {
     @Value("${instance.properties.worker.type}")
-    private ComputationType type;
+    private WorkerType workerType;
+
+    @Value("${instance.properties.worker.operation}")
+    private ComputationType operationType;
 
     /* delay is set for worker instance to slow down computation to test different kafka configs */
     @Value("${instance.properties.worker.delay:0}")
@@ -36,17 +40,13 @@ public class WorkerProperties {
     /* basing on properties certain type of worker is instantiated */
     @Bean
     public Computer assignWorkerType() {
-        log.info("Assigning worker type: {}", type.toString().toUpperCase());
+        log.info("Assigning worker type: {}", operationType.toString().toUpperCase());
         log.info("Assigning worker delay: {} ms", computationDelay);
-        return switch (type) {
+        return switch (operationType) {
             case ADDITION -> new Adder(computationDelay);
             case DIVISION -> new Divider(computationDelay);
             case EXPONENT -> new Exponent(computationDelay);
             case MULTIPLICATION -> new Multiplier(computationDelay);
         };
-    }
-
-    public String getWorkerId() {
-        return workerId;
     }
 }

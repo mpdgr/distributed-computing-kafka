@@ -37,4 +37,4 @@ logging:
   level:
     root: info
     com.mpdgr: trace
-instance.properties.worker.id: 8
+instance.properties.worker.id: ${WORKER_ID}

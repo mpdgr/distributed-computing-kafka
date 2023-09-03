@@ -29,6 +29,7 @@ public class ComputingService {
 
         /* sign */
         event.setWorkerId(properties.getWorkerId());
+        event.setWorkerType(properties.getWorkerType());
         log.debug("Resolved task: job: {}, task nr: {}, worker type: {}, worker id: {}",
                 event.getJobId(), event.getTaskNr(), event.getTask().getType(), event.getWorkerId());
 

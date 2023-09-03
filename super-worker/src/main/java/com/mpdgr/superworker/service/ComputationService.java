@@ -52,6 +52,7 @@ public class ComputationService {
 
         //sign
         event.setWorkerId(properties.getWorkerId());
+        event.setWorkerType(properties.getWorkerType());
         log.debug("Resolved task: job: {}, task nr: {}, worker type: SUPERWORKER, worker id: {}",
                 event.getJobId(), event.getTaskNr(), event.getWorkerId());
 

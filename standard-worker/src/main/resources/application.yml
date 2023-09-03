@@ -41,6 +41,7 @@ instance:
     worker:
       id: ${WORKER_ID}
       type: ${WORKER_TYPE}
+      operation: ${WORKER_OPERATION}
       delay: ${WORKER_DELAY}
       reads-topic: ${READS_TOPIC}
       superworker: false

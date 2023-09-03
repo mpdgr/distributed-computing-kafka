@@ -31,7 +31,6 @@ public class JobManager {
     private final ComputationEventsGenerator eventsGenerator;
     private final ComputationEventProducer producer;
     private final ResultsRegistry resultsRegistry;
-//    private final JobCompleteEventListener eventsListener;
     private final JobCompleteEventHandlingConfig config;
 
     public JobCompleteSummary processJob (ComputationJob job)
@@ -44,12 +43,6 @@ public class JobManager {
         //initialize event listener waiting for computation process to finish
         CompletableFuture<JobCompleteSummary> futureSummary = new CompletableFuture<>();
         config.registerJobCompleteEventListener(job, futureSummary);
-//        eventsListener.setJob(job);
-//        eventsListener.setJobId(job.getJobId());
-//        log.debug("Setting job for app listener, job: {}", job.getJobId());
-//        eventsListener.setFutureSummary(futureSummary);
-//        log.debug("Setting future summary, job: {}", job.getJobId());
-//        eventsListener.logJob();
 
         //log start
         log.info("Started processing job id: {}; nr of tasks: {};", job.getJobId(), job.getJobSize());
@@ -64,25 +57,6 @@ public class JobManager {
                     event.getJobId(), event.getTaskNr(), event.getTask().getType());
             producer.sendComputationEvent(event);
         }
-
-//        eventsListener.logJob();
-
-        //initialize event listener waiting for computation process to finish
-
-
-//        ApplicationListener<JobCompleteEvent> resultsListener = event -> {
-//            if (event.getJobId().equals(job.getJobId())){
-//                try {
-//                    futureSummary.complete(jobCompleteEventHandler.handleJobCompleted(job, event));
-//                } catch (ComputationSystemException e) {
-//                    log.error(e.getMessage());
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        };
-        //todo: connect listener to publisher
-
-
 
         //todo: test if controller is async
         return futureSummary.get();

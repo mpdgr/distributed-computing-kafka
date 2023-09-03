@@ -18,6 +18,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: task-scheduler
+      poll-interval: 20
 #    properties:
 #      acks: -1  #todo: chyba nie działa
 #      retries: 50
@@ -40,3 +41,4 @@ logging:
 computing:
   properties:
     assist: 2
+instance.properties.worker.id: ${WORKER_ID}

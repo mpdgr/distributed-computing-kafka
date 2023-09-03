@@ -30,9 +30,10 @@ public class SuperworkerStateProducer {
     public CompletableFuture<SendResult<String, String>> sendSuperworkerState(SuperworkerState stateEvent)
             throws JsonProcessingException, ExecutionException, InterruptedException {
         String key = stateEvent.getJobId(); //constant key to keep track of events order
-        String value = mapper.writeValueAsString(stateEvent.getState());
+        String value = mapper.writeValueAsString(stateEvent);
         ProducerRecord<String, String> record = buildRecord(stateTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);
+        log.debug("Superworker state send: {}", stateEvent.getState());
         return resultFuture.whenComplete(new SendResultBiConsumer<>(stateEvent));
     }
 

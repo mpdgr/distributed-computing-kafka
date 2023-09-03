@@ -16,7 +16,8 @@ services:
     container_name: adder
     environment:
       WORKER_ID: adder_1
-      WORKER_TYPE: ADDITION
+      WORKER_TYPE: STANDARD
+      WORKER_OPERATION: ADDITION
       WORKER_DELAY: 100
       READS_TOPIC: addition
 
@@ -25,7 +26,8 @@ services:
     container_name: mulitiplier
     environment:
       WORKER_ID: mulitiplier_1
-      WORKER_TYPE: MULTIPLICATION
+      WORKER_TYPE: STANDARD
+      WORKER_OPERATION: MULTIPLICATION
       WORKER_DELAY: 100
       READS_TOPIC: multiplication
 
@@ -34,7 +36,8 @@ services:
     container_name: divider
     environment:
       WORKER_ID: divider_1
-      WORKER_TYPE: DIVISION
+      WORKER_TYPE: STANDARD
+      WORKER_OPERATION: DIVISION
       WORKER_DELAY: 100
       READS_TOPIC: division
 
@@ -43,7 +46,8 @@ services:
     container_name: exponent
     environment:
       WORKER_ID: exponent_1
-      WORKER_TYPE: EXPONENT
+      WORKER_TYPE: STANDARD
+      WORKER_OPERATION: EXPONENT
       WORKER_DELAY: 100
       READS_TOPIC: exponent
 
@@ -53,8 +57,8 @@ services:
     environment:
       WORKER_ID: superworker_1
       WORKER_TYPE: SUPER
-      WORKER_DELAY: 10
-      READS_TOPIC: exponent
+      WORKER_DELAY: 50
+      READS_TOPIC: superworker
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
