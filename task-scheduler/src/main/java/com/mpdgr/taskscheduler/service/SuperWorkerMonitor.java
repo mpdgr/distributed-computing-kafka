@@ -7,5 +7,5 @@ import org.springframework.stereotype.Component;
 @Data
 public class SuperWorkerMonitor {
     //indicates whether superworker is idle and new tasks can be assigned
-    private volatile boolean isIdle = false;
+    private volatile boolean isIdle = true;
 }

@@ -1,0 +1,27 @@
+Superworker
+	group.id: superworker
+	instance.properties.worker.id: 1
+Adder
+	group.id: adder
+	instance.properties.worker.id: 2
+Multiplier
+	group.id: multiplier
+	instance.properties.worker.id: 3
+Divider
+	group.id: divider
+	instance.properties.worker.id: 4
+Exponent
+	group.id: exponent
+	instance.properties.worker.id: 5
+Exponent
+	group.id: exponent
+	instance.properties.worker.id: 6
+Exponent
+	group.id: exponent
+	instance.properties.worker.id: 7
+Job controller
+	group.id: jobcontroller
+	instance.properties.worker.id: 8
+Task scheduler
+	group.id: taskscheduler
+	instance.properties.worker.id: 9

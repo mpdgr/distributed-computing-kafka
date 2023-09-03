@@ -3,10 +3,13 @@ package com.mpdgr.superworker.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.domain.ComputationTask;
+import com.mpdgr.commonrepo.domain.SuperworkerState;
 import com.mpdgr.commonrepo.enumeration.ComputationType;
+import com.mpdgr.commonrepo.enumeration.SuperworkerStateType;
 import com.mpdgr.commonrepo.exception.TaskMismatchException;
 import com.mpdgr.superworker.config.WorkerProperties;
 import com.mpdgr.superworker.kafka.ComputationEventProducer;
+import com.mpdgr.superworker.kafka.SuperworkerStateProducer;
 import com.mpdgr.superworker.service.computer.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +23,18 @@ import java.util.concurrent.ExecutionException;
 public class ComputationService {
     private final WorkerProperties properties;
     private final ComputationEventProducer eventProducer;
+    private final SuperworkerStateProducer superworkerStateProducer;
 
     public ComputationEvent processEvent(ComputationEvent event)
-            throws InterruptedException, TaskMismatchException, JsonProcessingException, ExecutionException {
+            throws InterruptedException, TaskMismatchException,
+            JsonProcessingException, ExecutionException {
 
+        //notify busy
+        superworkerStateProducer
+                .sendSuperworkerState(new SuperworkerState(SuperworkerStateType.BUSY));
+        log.trace("Superworker busy");
+
+        //process event
         ComputationType type = event.getTask().getType();
         log.info("Assigning worker type: {}", type.toString().toUpperCase());
         log.info("Assigning worker delay: {} ms", properties.getComputationDelay());
@@ -46,6 +57,12 @@ public class ComputationService {
 
         //send to completed topic
         eventProducer.sendComputationEventSynchronous(event);
+
+        //notify idle
+        superworkerStateProducer
+                .sendSuperworkerState(new SuperworkerState(SuperworkerStateType.IDLE));
+        log.trace("Superworker idle");
+
         return event;
     };
 }

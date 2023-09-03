@@ -2,6 +2,7 @@ package com.mpdgr.taskscheduler.service;
 
 import com.mpdgr.commonrepo.enumeration.ComputationType;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
+@Slf4j
 public class ProgressReport {
     private final String jobId;
 
@@ -61,9 +63,11 @@ public class ProgressReport {
     }
 
     int getMaxLagValue() {
-        return Collections.max(
+        int maxLagValue = Collections.max(
                 List.of(additionLag(), multiplicationLag(), divisionLag(), exponentLag()),
                 (x, y) -> x - y);  //todo: test
+        log.debug("Max lagging value: {}", maxLagValue);
+        return maxLagValue;
     }
 
     ComputationType getMaxLaggingOperation() {
@@ -76,22 +80,35 @@ public class ProgressReport {
         Integer max = maxLag.keySet().stream()
                 .max((x, y) -> x - y)
                 .get(); //todo: write test
-        return maxLag.get(max);
+
+        ComputationType maxLaggingType= maxLag.get(max);
+        log.debug("Max lagging type recorded: {}, lag size {}, job id: {}",
+                maxLaggingType.name(), max, jobId);
+
+        return maxLaggingType;
     }
 
     private int additionLag() {
-        return additionsScheduled - additionsCompleted;
+        int lag = additionsScheduled - additionsCompleted;
+        log.trace("Addition lag: {}", lag);
+        return lag;
     }
 
     private int multiplicationLag() {
-        return multiplicationsScheduled - multiplicationsCompleted;
+        int lag = multiplicationsScheduled - multiplicationsCompleted;
+        log.trace("Multiplication lag: {}", lag);
+        return lag;
     }
 
     private int divisionLag() {
-        return divisionsScheduled - divisionsCompleted;
+        int lag = divisionsScheduled - divisionsCompleted;
+        log.trace("Division lag: {}", lag);
+        return lag;
     }
 
     private int exponentLag() {
-        return exponentsScheduled - exponentsCompleted;
+        int lag = exponentsScheduled - exponentsCompleted;
+        log.trace("Exponent lag: {}", lag);
+        return lag;
     }
 }

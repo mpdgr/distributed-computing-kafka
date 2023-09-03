@@ -42,6 +42,7 @@ public class TaskSchedulerService {
         /* check whether current workers' lag/delay at job execution
         exceeds min for superworker assistance */
 
+        log.debug("Checking progress report, job id {}", event.getJobId());
         ProgressReport report = registry.getProgressReport(event.getJobId());
 
         if (report == null) {
@@ -55,6 +56,7 @@ public class TaskSchedulerService {
 
         /* check whether this task type is the one with the highest lag/delay */
         boolean assistanceRequiredAtThisTask = (report.getMaxLaggingOperation() == event.getTask().getType());
+        log.debug("Checked if assistance required, required: {}", assistanceRequiredAtThisTask);
         if (!assistanceRequiredAtThisTask){
             return false;
         }
@@ -62,6 +64,7 @@ public class TaskSchedulerService {
         /* check whether superworker is idle
         (new task can only be assigned if all current tasks of superworker are completed) */
         boolean superworkerAvailable = superWorkerMonitor.isIdle();
+        log.debug("Checked if superworker is idle, idle: {}", superworkerAvailable);
 
         if (!superworkerAvailable){
             log.info("Assistance required, but superworker not available");

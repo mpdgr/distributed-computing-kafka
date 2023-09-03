@@ -29,6 +29,7 @@ public class ComputationEventProducer {
 
     public SendResult<String, String> sendComputationEventSynchronous(ComputationEvent event)
             throws JsonProcessingException, ExecutionException, InterruptedException {
+        log.debug("Processing send for job {}", event.getJobId());
         String key = event.getJobId();
         String value = mapper.writeValueAsString(event);
         ProducerRecord<String, String> record = buildRecord(completedTopic, key, value);
