@@ -12,8 +12,7 @@ public class JobCompleteEventHandler {
     public JobCompleteSummary handleJobCompleted(ComputationJob computationJob, JobCompleteEvent completeEvent)
             throws ComputationSystemException {
 
-        log.debug("Handling job completed, job: {}, event {}", computationJob, completeEvent);
-        log.info("Handling job completed, id {}", completeEvent.getJobId());
+        log.info("HANDLING JOB COMPLETED!, id {}", completeEvent.getJobId());
         JobCompleteSummary jobSummary = new JobCompleteSummary(completeEvent.getJobId());
         jobSummary.processJobCompleteEvent(completeEvent, computationJob.getStartTime());
 

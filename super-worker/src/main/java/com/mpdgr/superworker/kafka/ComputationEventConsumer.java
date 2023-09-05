@@ -23,9 +23,9 @@ public class ComputationEventConsumer {
     @KafkaListener(topics = {"${instance.properties.worker.reads-topic}"})
     public void onMessage(ConsumerRecord<String, String> record)
             throws JsonProcessingException, TaskMismatchException, InterruptedException, ExecutionException {
-        log.debug("Event received: {}", record);
+        log.debug("Event received: {}", record.value());
         ComputationEvent receivedEvent = mapper.readValue(record.value(), ComputationEvent.class);
         ComputationEvent processedEvent = computationService.processEvent(receivedEvent);
-        log.debug("Event processed: {}", processedEvent);
+        log.debug("Event processed, task nr: {}", processedEvent.getTaskNr());
     }
 }

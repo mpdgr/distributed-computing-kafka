@@ -17,6 +17,9 @@ import java.util.Set;
 public class JobCompleteSummary {
     private String jobId;
 
+    private long totalTasksCompleted = 0;
+    private long superworkerTasksCompleted = 0;
+
     private long additionsCompleted = 0;
     private long multiplicationCompleted = 0;
     private long divisionCompleted = 0;
@@ -26,6 +29,7 @@ public class JobCompleteSummary {
     private long endTime;
 
     private long operationTimeMs;
+    private long operationTimeSec;
 
     //nr of tasks completed by each worker
     private Map<String, Integer> allWorkersSummary = new HashMap<>();
@@ -51,13 +55,15 @@ public class JobCompleteSummary {
 
         log.info("Preparing summary for job id: {}", event.getJobId());
 
-        setTime();
         List<ComputationEvent> computationEvents = event.getEvents();
         computationEvents.forEach(e -> {
             registerComputationTask(e);
             registerWorkerTask(e);
             registerSuperworkerTask(e);
         });
+
+        setTime();
+        setTotals();
     }
 
     public Set<String> workersParticipating(){
@@ -89,11 +95,19 @@ public class JobCompleteSummary {
     private void registerSuperworkerTask(ComputationEvent event){
         if (event.getWorkerType() == WorkerType.SUPER){
             //increment nr of tasks of given type completed by superworker
-            superworkerSummary.put(event.getTask().getType(), superworkerSummary.get(event.getTask().getType()) + 1);
+            superworkerSummary.put(event.getTask().getType(),
+                    superworkerSummary.get(event.getTask().getType()) + 1);
         }
     }
 
     private void setTime() {
         operationTimeMs = endTime - startTime;
+        operationTimeSec = operationTimeMs / 1000;
+    }
+
+    private void setTotals() {
+        totalTasksCompleted = totalTasksCompleted();
+        superworkerTasksCompleted = superworkerSummary.values().stream()
+                .reduce(0, Integer::sum); //todo: check
     }
 }

@@ -17,9 +17,14 @@ public class JobCompleteEventHandlingConfig {
 
     public void registerJobCompleteEventListener(ComputationJob job,
                                                  CompletableFuture<JobCompleteSummary> futureSummary) {
-        JobCompleteEventListener listener = new JobCompleteEventListener(job, futureSummary);
+        JobCompleteEventListener listener =
+                new JobCompleteEventListener(job.getJobId(), job, futureSummary, this);
         applicationEventMulticaster.addApplicationListener(listener);
         log.debug("Event listener registered, job id {}", job.getJobId());
     }
-    //todo: unregister
+
+    public void removeListener(JobCompleteEventListener listener) {
+        applicationEventMulticaster.removeApplicationListener(listener);
+        log.debug("Event listener cleared, job id: {}", listener.getJob());
+    }
 }
