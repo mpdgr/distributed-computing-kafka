@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.domain.ComputationTask;
 import com.mpdgr.commonrepo.enumeration.ComputationType;
+import com.mpdgr.commonrepo.exception.ComputationException;
 import com.mpdgr.commonrepo.exception.TaskMismatchException;
 import com.mpdgr.worker.config.WorkerProperties;
 import com.mpdgr.worker.kafka.ComputationEventProducer;
@@ -23,7 +24,8 @@ public class ComputingService {
     private final ComputationEventProducer eventProducer;
 
     public ComputationEvent processEvent(ComputationEvent event)
-            throws InterruptedException, TaskMismatchException, JsonProcessingException, ExecutionException {
+            throws InterruptedException, TaskMismatchException, JsonProcessingException,
+            ExecutionException {
         /* resolve task */
         ComputationTask resolved = computer.resolveTask(event.getTask());
 

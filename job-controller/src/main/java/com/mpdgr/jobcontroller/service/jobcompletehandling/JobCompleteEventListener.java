@@ -1,7 +1,7 @@
 package com.mpdgr.jobcontroller.service.jobcompletehandling;
 
 import com.mpdgr.commonrepo.domain.ComputationJob;
-import com.mpdgr.commonrepo.exception.ComputationSystemException;
+import com.mpdgr.commonrepo.exception.SystemException;
 import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import com.mpdgr.jobcontroller.domain.JobCompleteSummary;
 import lombok.Getter;
@@ -32,16 +32,11 @@ public class JobCompleteEventListener implements ApplicationListener<JobComplete
     public void onApplicationEvent(JobCompleteEvent event) {
         log.info("Application event noticed, job id: {}", event.getJobId());
         log.debug("Processing listener job: {}", job);
-        if (event.getJobId().equals(job.getJobId())){
-            try {
-                log.debug("Future complete attempt for job: {}", job.getJobId());
-                JobCompleteEventHandler jobCompleteEventHandler = new JobCompleteEventHandler();
-                futureSummary.complete(jobCompleteEventHandler.handleJobCompleted(job, event));
-                log.debug("Future completed for job: {}", job.getJobId());
-            } catch (ComputationSystemException e) {
-                log.error(e.getMessage());
-                throw new RuntimeException(e);
-            }
+        if (event.getJobId().equals(job.getJobId())) {
+            log.debug("Future complete attempt for job: {}", job.getJobId());
+            JobCompleteEventHandler jobCompleteEventHandler = new JobCompleteEventHandler();
+            futureSummary.complete(jobCompleteEventHandler.handleJobCompleted(job, event));
+            log.debug("Future completed for job: {}", job.getJobId());
             config.removeListener(this);
         }
     }
