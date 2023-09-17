@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ComputationService {
+public class ComputingService {
     private final WorkerProperties properties;
     private final ComputationEventProducer eventProducer;
     private final SuperworkerStateProducer superworkerStateProducer;

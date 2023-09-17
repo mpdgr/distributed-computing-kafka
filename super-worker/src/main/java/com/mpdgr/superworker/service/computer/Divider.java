@@ -2,6 +2,7 @@ package com.mpdgr.superworker.service.computer;
 
 import com.mpdgr.commonrepo.domain.ComputationTask;
 import com.mpdgr.commonrepo.enumeration.ComputationType;
+import com.mpdgr.commonrepo.exception.ComputationException;
 import com.mpdgr.commonrepo.exception.TaskMismatchException;
 
 import java.util.concurrent.CountDownLatch;
@@ -24,6 +25,11 @@ public class Divider implements Computer {
             throw new TaskMismatchException(String
                     .format("Worker of type: %s unable to process task of type: %s",
                             this.getComputerType().toString(), task.getType().toString()));
+        }
+
+        /* if y < 1 throw exception (this is arbitrary exception to test exception handling logic) */
+        if (y < 1) {
+            throw new ComputationException("Too low divisor exception");
         }
 
         /* delay to pretend some serious calculations */

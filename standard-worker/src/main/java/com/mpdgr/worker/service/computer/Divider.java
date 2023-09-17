@@ -28,7 +28,7 @@ public class Divider implements Computer{
                             this.getComputerType().toString(), task.getType().toString()));
         }
 
-        /* if y < 1 throw exception (arbitrary to test exception handling) */
+        /* if y < 1 throw exception (this is arbitrary exception to test exception handling logic) */
         if (y < 1) {
             throw new ComputationException("Too low divisor exception");
         }

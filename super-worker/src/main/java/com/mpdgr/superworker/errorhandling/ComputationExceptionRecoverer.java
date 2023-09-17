@@ -1,4 +1,4 @@
-package com.mpdgr.worker.errorhandling;
+package com.mpdgr.superworker.errorhandling;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,7 +6,7 @@ import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.exception.ComputationException;
 import com.mpdgr.commonrepo.exception.SystemException;
 import com.mpdgr.commonrepo.exception.TaskMismatchException;
-import com.mpdgr.worker.service.ComputingService;
+import com.mpdgr.superworker.service.ComputingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
