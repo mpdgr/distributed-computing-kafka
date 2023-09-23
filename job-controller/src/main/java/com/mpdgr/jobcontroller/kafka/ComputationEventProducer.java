@@ -23,10 +23,11 @@ public class ComputationEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
-    @Value("${spring.kafka.topic.compute-task}")
+    @Value("${spring.kafka.topic-names.compute-task}")
     private String computeTopic;
 
-    //asynchronous producer //todo: test
+    //asynchronous producer
+    // todo: test
     public CompletableFuture<SendResult<String, String>> sendComputationEvent(ComputationEvent event)
             throws JsonProcessingException {
         String key = event.getJobId();

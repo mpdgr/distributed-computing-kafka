@@ -24,7 +24,7 @@ public class ComputationEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
-    @Value("${spring.kafka.topic.completed-task}")
+    @Value("${spring.kafka.topic-names.completed-task}")
     private String completedTopic;
 
     public SendResult<String, String> sendComputationEventSynchronous(ComputationEvent event)

@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 public class TopicRouter {
     private final ComputationEventProducer producer;
 
-    @Value("${spring.kafka.topic.addition}")
+    @Value("${spring.kafka.topic-names.addition}")
     private String additionTopic;
-    @Value("${spring.kafka.topic.multiplication}")
+    @Value("${spring.kafka.topic-names.multiplication}")
     private String multiplicationTopic;
-    @Value("${spring.kafka.topic.division}")
+    @Value("${spring.kafka.topic-names.division}")
     private String divisionTopic;
-    @Value("${spring.kafka.topic.exponent}")
+    @Value("${spring.kafka.topic-names.exponent}")
     private String exponentTopic;
-    @Value("${spring.kafka.topic.superworker}")
+    @Value("${spring.kafka.topic-names.superworker}")
     private String superworkerTopic;
 
     void sendToStandardWorker(ComputationEvent event)

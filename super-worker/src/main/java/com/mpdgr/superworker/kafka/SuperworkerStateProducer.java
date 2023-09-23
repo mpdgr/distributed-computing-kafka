@@ -24,7 +24,7 @@ public class SuperworkerStateProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
-    @Value("${spring.kafka.topic.superworker-state}")
+    @Value("${spring.kafka.topic-names.superworker-state}")
     private String stateTopic;
 
     public CompletableFuture<SendResult<String, String>> sendSuperworkerState(SuperworkerState stateEvent)

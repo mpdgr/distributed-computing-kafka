@@ -18,14 +18,14 @@ spring:
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: superworker
+      group-id: ${GROUP_ID}
     properties:
       acks: 1
 #      retries: 50
 #    admin:
 #      properties:
 #        client.id: adm
-    topic:
+    topic-names:
       compute-task: compute-task
       completed-task: completed-task
       addition: addition

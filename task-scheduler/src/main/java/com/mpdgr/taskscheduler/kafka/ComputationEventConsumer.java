@@ -21,7 +21,7 @@ public class ComputationEventConsumer {
     private final CompletedTaskManager completedTaskManager;
     private final ObjectMapper mapper;
 
-    @KafkaListener(topics = {"${spring.kafka.topic.compute-task}"})
+    @KafkaListener(topics = {"${spring.kafka.topic-names.compute-task}"})
     public void onComputeMessage(ConsumerRecord<String, String> record)
             throws JsonProcessingException, ProgressReportMissingException {
         log.debug("Event received from compute task topic, id: {}", record.key());
@@ -29,7 +29,7 @@ public class ComputationEventConsumer {
         service.scheduleTask(event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.completed-task}")
+    @KafkaListener(topics = "${spring.kafka.topic-names.completed-task}")
     public void onCompletedMessage(ConsumerRecord<String, String> record)
             throws JsonProcessingException, ProgressReportMissingException {
         log.debug("Event received from completed task topic, id: {}", record.key());

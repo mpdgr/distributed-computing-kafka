@@ -20,7 +20,7 @@ spring:
     admin:
       properties:
         client.id: adm
-    topic:
+    topic-names:
       compute-task: compute-task
       completed-task: completed-task
       addition: addition

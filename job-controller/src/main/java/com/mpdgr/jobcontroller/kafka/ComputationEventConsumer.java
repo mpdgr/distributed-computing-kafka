@@ -18,7 +18,7 @@ public class ComputationEventConsumer {
     private final CompletedEventManager eventProcessor;
     private final ObjectMapper mapper;
 
-    @KafkaListener(topics = "${spring.kafka.topic.completed-task}")
+    @KafkaListener(topics = "${spring.kafka.topic-names.completed-task}")
     public void onMessage(ConsumerRecord<String, String> record)
             throws JsonProcessingException, ResultsRegistryException {
         ComputationEvent receivedEvent = mapper.readValue(record.value(), ComputationEvent.class);
