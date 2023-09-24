@@ -29,12 +29,12 @@ public class ComputingService {
             throws InterruptedException, TaskMismatchException,
             JsonProcessingException, ExecutionException {
 
-        //notify busy
+        /* notify busy */
         superworkerStateProducer
                 .sendSuperworkerState(new SuperworkerState(SuperworkerStateType.BUSY));
         log.trace("Superworker busy");
 
-        //process event
+        /* process event */
         ComputationType type = event.getTask().getType();
         log.info("Assigning worker type: {}", type.toString().toUpperCase());
         log.info("Assigning worker delay: {} ms", properties.getComputationDelay());
@@ -47,23 +47,23 @@ public class ComputingService {
                     case MULTIPLICATION -> new Multiplier(properties.getComputationDelay());
                 };
 
-        //resolve task
+        /* resolve task */
         ComputationTask resolved = computer.resolveTask(event.getTask());
 
-        //sign
+        /* sign */
         event.setWorkerId(properties.getWorkerId());
         event.setWorkerType(properties.getWorkerType());
         log.debug("Resolved task: job: {}, task nr: {}, worker type: SUPERWORKER, worker id: {}",
                 event.getJobId(), event.getTaskNr(), event.getWorkerId());
 
-        //send to completed topic
+        /* send to completed topic */
         eventProducer.sendComputationEventSynchronous(event);
 
-        //notify idle
+        /* notify idle */
         superworkerStateProducer
                 .sendSuperworkerState(new SuperworkerState(SuperworkerStateType.IDLE));
         log.trace("Superworker idle");
 
         return event;
-    };
+    }
 }

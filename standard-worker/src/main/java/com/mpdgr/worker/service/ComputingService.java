@@ -3,8 +3,6 @@ package com.mpdgr.worker.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.domain.ComputationTask;
-import com.mpdgr.commonrepo.enumeration.ComputationType;
-import com.mpdgr.commonrepo.exception.ComputationException;
 import com.mpdgr.commonrepo.exception.TaskMismatchException;
 import com.mpdgr.worker.config.WorkerProperties;
 import com.mpdgr.worker.kafka.ComputationEventProducer;

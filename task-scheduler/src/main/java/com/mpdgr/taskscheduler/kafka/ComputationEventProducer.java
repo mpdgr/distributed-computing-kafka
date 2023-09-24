@@ -25,7 +25,7 @@ public class ComputationEventProducer {
     public CompletableFuture<SendResult<String, String>> sendComputationEvent(ComputationEvent event,
                                                                               String targetTopic)
             throws JsonProcessingException {
-        String key = null; //null key for round robin partition distribution
+        String key = null; //null key for round robin partition assignment
         String value = mapper.writeValueAsString(event);
         ProducerRecord<String, String> record = buildRecord(targetTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);

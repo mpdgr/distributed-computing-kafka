@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Every worker instance in the system has only one role:
- * - adder or
- * - multiplier or
- * - divider or
- * - exponent
+ * Every worker instance in the system has only one role: <p>
+ * - adder or <p>
+ * - multiplier or <p>
+ * - divider or <p>
+ * - exponent <p>
  * and can execute one type of arithmetic operation (even though this module includes code for all operations)
- * Type of worker is determined basing on docker container environment variables passed in docker-compose.
+ * Type of worker is determined basing on docker container environment variables passed in docker-compose. <p>
  * This class holds info on the role of this specific worker instance.
  */
 

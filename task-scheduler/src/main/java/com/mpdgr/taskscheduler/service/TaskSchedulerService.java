@@ -23,7 +23,7 @@ public class TaskSchedulerService {
     @Value("${computing.properties.assist:2}")
     private Integer minLag;
 
-    /* delay added so the tasks are not send at once to allow better load balancing */
+    /* delay added so the tasks are not send at once to enable sensible load balancing */
     @Value("${computing.properties.delay:0}")
     private long sendDelay;
 
@@ -63,14 +63,14 @@ public class TaskSchedulerService {
         }
 
         boolean assistanceRequired = report.getMaxLagValue() >= minLag;
-        if (!assistanceRequired){
+        if (!assistanceRequired) {
             return false;
         }
 
         /* check whether this task type is the one with the highest lag/delay */
         boolean assistanceRequiredAtThisTask = (report.getMaxLaggingOperation() == event.getTask().getType());
         log.debug("Checked if assistance required, required: {}", assistanceRequiredAtThisTask);
-        if (!assistanceRequiredAtThisTask){
+        if (!assistanceRequiredAtThisTask) {
             return false;
         }
 
@@ -79,7 +79,7 @@ public class TaskSchedulerService {
         boolean superworkerAvailable = superWorkerMonitor.isIdle();
         log.debug("Checked if superworker is idle, idle: {}", superworkerAvailable);
 
-        if (!superworkerAvailable){
+        if (!superworkerAvailable) {
             log.info("Assistance required, but superworker not available");
             return false;
         }
@@ -87,9 +87,9 @@ public class TaskSchedulerService {
         return true;
     }
 
-    private void logTaskInReport(ComputationEvent event){
+    private void logTaskInReport(ComputationEvent event) {
         ProgressReport report = registry.getProgressReport(event.getJobId());
-        switch (event.getTask().getType()){
+        switch (event.getTask().getType()) {
             case ADDITION -> report.registerScheduledAddition();
             case MULTIPLICATION -> report.registerScheduledMultiplication();
             case DIVISION -> report.registerScheduledDivision();

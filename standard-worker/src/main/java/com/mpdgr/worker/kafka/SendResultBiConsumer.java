@@ -18,7 +18,6 @@ public class SendResultBiConsumer<T extends JobEvent> implements BiConsumer<Send
     public void accept(SendResult<String, String> result, Throwable throwable) {
         if (throwable != null){
             log.error(ERROR_MESSAGE, event.getJobId(), throwable, event);
-            //todo: implement error handling
         } else {
             log.trace(SUCCESS_MESSAGE, event.getJobId());
         }

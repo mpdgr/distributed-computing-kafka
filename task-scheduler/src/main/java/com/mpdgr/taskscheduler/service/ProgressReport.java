@@ -14,19 +14,19 @@ import java.util.Map;
 public class ProgressReport {
     private final String jobId;
 
-    //scheduled tasks
+    /* scheduled tasks */
     private int additionsScheduled = 0;
     private int multiplicationsScheduled = 0;
     private int divisionsScheduled = 0;
     private int exponentsScheduled = 0;
 
-    //completed tasks
+    /* completed tasks */
     private int additionsCompleted = 0;
     private int multiplicationsCompleted = 0;
     private int divisionsCompleted = 0;
     private int exponentsCompleted = 0;
 
-    //add scheduled task
+    /* add scheduled task */
 
     int registerScheduledAddition() {
         return additionsScheduled++;
@@ -44,7 +44,7 @@ public class ProgressReport {
         return exponentsScheduled++;
     }
 
-    //add completed task
+    /* add completed task */
 
     int registerCompletedAddition() {
         return additionsCompleted++;
@@ -65,7 +65,7 @@ public class ProgressReport {
     int getMaxLagValue() {
         int maxLagValue = Collections.max(
                 List.of(additionLag(), multiplicationLag(), divisionLag(), exponentLag()),
-                (x, y) -> x - y);  //todo: test
+                (x, y) -> x - y);
         log.debug("Max lagging value: {}", maxLagValue);
         return maxLagValue;
     }
@@ -79,7 +79,7 @@ public class ProgressReport {
 
         Integer max = maxLag.keySet().stream()
                 .max((x, y) -> x - y)
-                .get(); //todo: write test
+                .get();
 
         ComputationType maxLaggingType= maxLag.get(max);
         log.debug("Max lagging type recorded: {}, lag size {}, job id: {}",

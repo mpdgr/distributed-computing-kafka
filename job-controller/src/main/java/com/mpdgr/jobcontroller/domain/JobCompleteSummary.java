@@ -52,7 +52,6 @@ public class JobCompleteSummary {
     public void processJobCompleteEvent(JobCompleteEvent event, long startTime) {
         this.startTime = startTime;
         endTime = event.getTimestamp();
-
         log.info("Preparing summary for job id: {}", event.getJobId());
 
         List<ComputationEvent> computationEvents = event.getEvents();
@@ -108,6 +107,6 @@ public class JobCompleteSummary {
     private void setTotals() {
         totalTasksCompleted = totalTasksCompleted();
         superworkerTasksCompleted = superworkerSummary.values().stream()
-                .reduce(0, Integer::sum); //todo: check
+                .reduce(0, Integer::sum);
     }
 }

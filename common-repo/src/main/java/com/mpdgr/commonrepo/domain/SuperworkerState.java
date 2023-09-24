@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class SuperworkerState extends JobEvent{
     private SuperworkerStateType state;
-    //todo: deserialize error
 
     public SuperworkerState() {
         super("Superworker monitoring process");

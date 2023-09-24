@@ -8,7 +8,7 @@ import com.mpdgr.commonrepo.exception.TaskMismatchException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class Divider implements Computer{
+public class Divider implements Computer {
     private final Long delay;
 
     public Divider(Long delay) {
@@ -22,7 +22,7 @@ public class Divider implements Computer{
         double y = task.getValue2();
 
         /* make sure the task type fits given instance */
-        if (task.getType() != this.getComputerType()){
+        if (task.getType() != this.getComputerType()) {
             throw new TaskMismatchException(String
                     .format("Worker of type: %s unable to process task of type: %s",
                             this.getComputerType().toString(), task.getType().toString()));

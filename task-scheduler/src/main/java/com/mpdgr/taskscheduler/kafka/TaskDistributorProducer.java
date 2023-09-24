@@ -31,7 +31,7 @@ public class TaskDistributorProducer {
         return resultFuture.whenComplete(new SendResultBiConsumer<>(event));
     }
 
-    private ProducerRecord<String, String> buildRecord(String topic, String key, String value){
+    private ProducerRecord<String, String> buildRecord(String topic, String key, String value) {
         Header source = new RecordHeader("event-source", "task-scheduler".getBytes());
         Header type = new RecordHeader("event-type", "computation-event".getBytes());
         return new ProducerRecord<>(topic, null, key, value, List.of(source, type));

@@ -26,7 +26,7 @@ public class JobManager {
     private final ResultsRegistry resultsRegistry;
     private final JobCompleteEventHandlingConfig config;
 
-    public JobCompleteSummary processJob (ComputationJob job)
+    public JobCompleteSummary processJob(ComputationJob job)
             throws JsonProcessingException, ResultsRegistryException,
             ExecutionException, InterruptedException {
 
@@ -45,7 +45,7 @@ public class JobManager {
         resultsRegistry.registerJob(job);
 
         /* send events to process */
-        for (ComputationEvent event : jobEvents){
+        for (ComputationEvent event : jobEvents) {
             log.debug("Sending event - job id: {}, task nr: {}, task type: {}",
                     event.getJobId(), event.getTaskNr(), event.getTask().getType());
             producer.sendComputationEvent(event);

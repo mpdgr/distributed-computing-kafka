@@ -35,9 +35,11 @@ public class KafkaConfig {
             ObjectProvider<ContainerCustomizer<Object, Object, ConcurrentMessageListenerContainer<Object, Object>>> kafkaContainerCustomizer) {
 
         ConcurrentKafkaListenerContainerFactory<Object, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+
         configurer.configure(factory, kafkaConsumerFactory
                 .getIfAvailable(() -> new DefaultKafkaConsumerFactory<>(this.properties.buildConsumerProperties())));
         kafkaContainerCustomizer.ifAvailable(factory::setContainerCustomizer);
+
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
         factory.setCommonErrorHandler(errorHandler());
         factory.setConcurrency(1);
@@ -45,7 +47,7 @@ public class KafkaConfig {
         return factory;
     }
 
-    public DefaultErrorHandler errorHandler(){
+    public DefaultErrorHandler errorHandler() {
         FixedBackOff backOff = new FixedBackOff(300L, 3);
         DefaultErrorHandler handler = new DefaultErrorHandler(recoverer, backOff);
         handler.addNotRetryableExceptions(ComputationException.class);

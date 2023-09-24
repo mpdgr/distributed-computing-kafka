@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-//todo
 /**
  * All incoming computation events with completed tasks are stored in a completedEventsMap. <p>
  * jobSizes map stores information about how many tasks were assigned to each job. <p>

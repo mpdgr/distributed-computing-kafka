@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
 import com.mpdgr.commonrepo.exception.ProgressReportMissingException;
-import com.mpdgr.commonrepo.exception.ResultsRegistryException;
 import com.mpdgr.taskscheduler.service.CompletedTaskManager;
 import com.mpdgr.taskscheduler.service.TaskSchedulerService;
 import lombok.RequiredArgsConstructor;

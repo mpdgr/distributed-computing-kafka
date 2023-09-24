@@ -20,7 +20,7 @@ public class Adder implements Computer {
         double y = task.getValue2();
 
         /* make sure the task type fits given instance */
-        if (task.getType() != this.getComputerType()){
+        if (task.getType() != this.getComputerType()) {
             throw new TaskMismatchException(String
                     .format("Worker of type: %s unable to process task of type: %s",
                             this.getComputerType().toString(), task.getType().toString()));
@@ -28,7 +28,7 @@ public class Adder implements Computer {
 
         /* delay to pretend some serious calculations */
         CountDownLatch latch = new CountDownLatch(1);
-        latch.await(delay, TimeUnit.MILLISECONDS); //todo: test
+        latch.await(delay, TimeUnit.MILLISECONDS);
 
         task.setResult(x + y);
         return task;

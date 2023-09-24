@@ -32,7 +32,7 @@ public class JobCompleteEventListener implements ApplicationListener<JobComplete
         }
     }
 
-    /* listeners compared on jobId only */
+    /* listeners compared on jobId only - one listener registered for each request/job */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

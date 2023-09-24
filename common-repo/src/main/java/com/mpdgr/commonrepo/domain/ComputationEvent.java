@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 public class ComputationEvent extends JobEvent{
     private String workerId;
-    private WorkerType workerType; //todo: parse type in worker
+    private WorkerType workerType;
     private int taskNr;
     private ComputationTask task;
 
@@ -18,9 +18,8 @@ public class ComputationEvent extends JobEvent{
         super(jobId);
     }
 
-    public ComputationEvent(String jobId, String workerId,
-                            WorkerType workerType, int taskNr,
-                            ComputationTask task) {
+    public ComputationEvent(String jobId, String workerId, WorkerType workerType,
+                            int taskNr, ComputationTask task) {
         super(jobId);
         this.workerId = workerId;
         this.workerType = workerType;

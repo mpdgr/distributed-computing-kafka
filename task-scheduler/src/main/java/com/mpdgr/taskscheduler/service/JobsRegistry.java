@@ -13,8 +13,8 @@ public class JobsRegistry {
      * tasks were passed to given workers and how many were returned.
      * It is used to determine which worker should be supported by
      * superworker (app which can do all types of computations and is
-     * assigned to support the least effective worker)
-     * - map key - job ID
+     * assigned to support the least effective worker) <p>
+     * - map key - job ID <p>
      * - map value - current state of tasks included in a job (progress report)
      */
     private final HashMap<String, ProgressReport> monitoringMap = new HashMap<>();

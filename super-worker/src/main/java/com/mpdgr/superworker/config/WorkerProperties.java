@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Superworker can do any of operations depending on task assignment so it can support other instances of:
- * - adder or
- * - multiplier or
- * - divider or
- * - exponent
- * Like other workers superworker is intended to work single-threaded working on one event at a time
+ * Superworker can do any operation depending on task assignment so it can support other instances of: <p>
+ * - adder or <p>
+ * - multiplier or <p>
+ * - divider or <p>
+ * - exponent <p>
+ * Like other workers superworker is intended to work single-threaded working on one task at a time.
  */
 
 @Configuration

@@ -3,17 +3,12 @@ package com.mpdgr.worker.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mpdgr.commonrepo.domain.ComputationEvent;
-import com.mpdgr.commonrepo.exception.ComputationException;
-import com.mpdgr.commonrepo.exception.SystemException;
 import com.mpdgr.commonrepo.exception.TaskMismatchException;
 import com.mpdgr.worker.service.ComputingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.listener.AcknowledgingMessageListener;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutionException;

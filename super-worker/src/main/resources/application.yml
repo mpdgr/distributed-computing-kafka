@@ -21,10 +21,6 @@ spring:
       group-id: ${GROUP_ID}
     properties:
       acks: 1
-#      retries: 50
-#    admin:
-#      properties:
-#        client.id: adm
     topic-names:
       compute-task: compute-task
       completed-task: completed-task
@@ -38,7 +34,6 @@ logging:
   level:
     root: info
     com.mpdgr: trace
-
 instance:
   properties:
     worker:
@@ -46,8 +41,3 @@ instance:
       type: ${WORKER_TYPE}
       delay: ${WORKER_DELAY}
       reads-topic: ${READS_TOPIC}
-#      id: 1
-#      type: super
-#      reads-topic: superworker
-#      delay: 100
-#      superworker: true
