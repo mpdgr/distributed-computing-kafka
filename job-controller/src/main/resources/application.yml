@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: docker
 server:
   port: 8081
 
@@ -8,15 +8,15 @@ server:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: docker
   kafka:
     bootstrap-servers: kafka_broker_1:9092, kafka_broker_2:9093, kafka_broker_3:9094
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
-        acks: all  #todo: chyba nie działa
-        retries: 50
+        acks: all
+        retries: 5
     admin:
       properties:
         client.id: adm

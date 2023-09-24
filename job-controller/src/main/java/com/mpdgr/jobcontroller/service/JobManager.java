@@ -30,28 +30,27 @@ public class JobManager {
             throws JsonProcessingException, ResultsRegistryException,
             ExecutionException, InterruptedException {
 
-        //create events list
+        /* create events list */
         List<ComputationEvent> jobEvents = eventsGenerator.createEventList(job);
 
-        //initialize event listener waiting for computation process to finish
+        /* initialize event listener waiting for computation process to finish */
         CompletableFuture<JobCompleteSummary> futureSummary = new CompletableFuture<>();
         config.registerJobCompleteEventListener(job, futureSummary);
 
-        //log start
+        /* log start */
         log.info("Started processing job id: {}; nr of tasks: {};", job.getJobId(), job.getJobSize());
         job.setStartTime(System.currentTimeMillis());
 
-        //register job
+        /* register job */
         resultsRegistry.registerJob(job);
 
-        //send events to process
+        /* send events to process */
         for (ComputationEvent event : jobEvents){
             log.debug("Sending event - job id: {}, task nr: {}, task type: {}",
                     event.getJobId(), event.getTaskNr(), event.getTask().getType());
             producer.sendComputationEvent(event);
         }
 
-        //todo: test if controller is async
         return futureSummary.get();
     }
 }

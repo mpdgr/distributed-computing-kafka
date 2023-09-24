@@ -32,7 +32,7 @@ public class TaskGenerator {
     private ComputationTask createDivisionTask(){
         return new ComputationTask(ComputationType.DIVISION,
                 rand.nextDouble(100_000),
-                rand.nextDouble(1_00) //TODO: min to avoid zero division
+                rand.nextDouble(100_000)
         );
     }
 
@@ -45,8 +45,8 @@ public class TaskGenerator {
 
     private ComputationTask createMultiplicationTask(){
         return new ComputationTask(ComputationType.MULTIPLICATION,
-                rand.nextDouble(10_000),
-                rand.nextDouble(10_000)
+                rand.nextDouble(100_000),
+                rand.nextDouble(100_000)
         );
     }
 }

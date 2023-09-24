@@ -23,7 +23,7 @@ public class ComputationEventConsumer {
 
     @KafkaListener(topics = {"${spring.kafka.topic-names.compute-task}"})
     public void onComputeMessage(ConsumerRecord<String, String> record)
-            throws JsonProcessingException, ProgressReportMissingException {
+            throws JsonProcessingException, ProgressReportMissingException, InterruptedException {
         log.debug("Event received from compute task topic, id: {}", record.key());
         ComputationEvent event = mapper.readValue(record.value(), ComputationEvent.class);
         service.scheduleTask(event);

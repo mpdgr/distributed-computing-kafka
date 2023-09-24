@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ComputationJobControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<String> handleValidationException(MethodArgumentNotValidException e){
+    ResponseEntity<String> handleValidationException(MethodArgumentNotValidException e) {
         StringBuilder message = new StringBuilder();
         message.append("Validation exception:\n");
         String ex = "- field: %s; error: %s \n";
@@ -22,13 +22,13 @@ public class ComputationJobControllerAdvice {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    ResponseEntity<String> handleParseException(HttpMessageNotReadableException e){
+    ResponseEntity<String> handleParseException(HttpMessageNotReadableException e) {
         String message = "Message not readable: " + e.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
     @ExceptionHandler(JsonProcessingException.class)
-    ResponseEntity<String> handleJsonException(JsonProcessingException e){
+    ResponseEntity<String> handleJsonException(JsonProcessingException e) {
         String message = "Json processing error: " + e.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }

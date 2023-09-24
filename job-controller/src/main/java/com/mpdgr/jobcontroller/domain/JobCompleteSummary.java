@@ -31,13 +31,13 @@ public class JobCompleteSummary {
     private long operationTimeMs;
     private long operationTimeSec;
 
-    //nr of tasks completed by each worker
+    /* nr of tasks completed by each worker */
     private Map<String, Integer> allWorkersSummary = new HashMap<>();
 
-    //tasks completed by superworker
+    /* tasks completed by superworker */
     private Map<ComputationType, Integer> superworkerSummary = new HashMap<>();
 
-    //init superworkersSummary hashmap
+    /* init superworkersSummary hashmap */
     {
         superworkerSummary.put(ComputationType.ADDITION, 0);
         superworkerSummary.put(ComputationType.MULTIPLICATION, 0);
@@ -66,16 +66,16 @@ public class JobCompleteSummary {
         setTotals();
     }
 
-    public Set<String> workersParticipating(){
+    public Set<String> workersParticipating() {
         return allWorkersSummary.keySet();
     }
 
-    public long totalTasksCompleted(){
+    public long totalTasksCompleted() {
         return additionsCompleted + multiplicationCompleted + divisionCompleted + exponentCompleted;
     }
 
-    private void registerComputationTask(ComputationEvent event){
-        switch (event.getTask().getType()){
+    private void registerComputationTask(ComputationEvent event) {
+        switch (event.getTask().getType()) {
             case ADDITION -> additionsCompleted++;
             case MULTIPLICATION -> multiplicationCompleted++;
             case DIVISION -> divisionCompleted++;
@@ -83,17 +83,17 @@ public class JobCompleteSummary {
         }
     }
 
-    private void registerWorkerTask(ComputationEvent event){
+    private void registerWorkerTask(ComputationEvent event) {
         String workerId = event.getWorkerId();
-        if (allWorkersSummary.containsKey(workerId)){
+        if (allWorkersSummary.containsKey(workerId)) {
             allWorkersSummary.put(workerId, allWorkersSummary.get(workerId) + 1);
         } else {
             allWorkersSummary.put(workerId, 1);
         }
     }
 
-    private void registerSuperworkerTask(ComputationEvent event){
-        if (event.getWorkerType() == WorkerType.SUPER){
+    private void registerSuperworkerTask(ComputationEvent event) {
+        if (event.getWorkerType() == WorkerType.SUPER) {
             //increment nr of tasks of given type completed by superworker
             superworkerSummary.put(event.getTask().getType(),
                     superworkerSummary.get(event.getTask().getType()) + 1);

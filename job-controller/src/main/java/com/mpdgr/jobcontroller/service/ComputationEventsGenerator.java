@@ -18,18 +18,18 @@ import java.util.List;
 public class ComputationEventsGenerator {
     private final TaskGenerator taskGenerator;
 
-    List<ComputationEvent> createEventList(ComputationJob job){
+    List<ComputationEvent> createEventList(ComputationJob job) {
         List<ComputationEvent> events = new ArrayList<>();
         events.addAll(createEvents(job.getAddition(), ComputationType.ADDITION, job.getJobId()));
         events.addAll(createEvents(job.getMultiplication(), ComputationType.MULTIPLICATION, job.getJobId()));
         events.addAll(createEvents(job.getDivision(), ComputationType.DIVISION, job.getJobId()));
         events.addAll(createEvents(job.getExponent(), ComputationType.EXPONENT, job.getJobId()));
 
-        //shuffle to randomize tasks type stream
+        /* shuffle to randomize tasks type stream */
         Collections.shuffle(events);
 
-        //add tasks numbering
-        for (int i = 0; i < events.size(); i++){
+        /* add tasks numbering */
+        for (int i = 0; i < events.size(); i++) {
             events.get(i).setTaskNr(i + 1);
         }
 
@@ -37,9 +37,9 @@ public class ComputationEventsGenerator {
         return events;
     }
 
-    List<ComputationEvent> createEvents(int nrOfTasks, ComputationType taskType, String jobId){
+    List<ComputationEvent> createEvents(int nrOfTasks, ComputationType taskType, String jobId) {
         List<ComputationEvent> events = new ArrayList<>();
-        for (int i = 0; i < nrOfTasks; i++){
+        for (int i = 0; i < nrOfTasks; i++) {
             ComputationEvent event = new ComputationEvent(jobId);
             ComputationTask task = taskGenerator.createTask(taskType);
             event.setTask(task);

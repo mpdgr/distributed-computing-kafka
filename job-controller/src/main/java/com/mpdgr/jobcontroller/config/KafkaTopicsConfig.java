@@ -30,7 +30,7 @@ public class KafkaTopicsConfig {
     private String superworkerState;
 
     @Bean
-    public NewTopic compute(){
+    public NewTopic compute() {
         NewTopic topic = TopicBuilder
                 .name(compute)
                 .partitions(3)
@@ -42,7 +42,7 @@ public class KafkaTopicsConfig {
     }
 
     @Bean
-    public NewTopic completed(){
+    public NewTopic completed() {
         NewTopic topic = TopicBuilder
                 .name(completed)
                 .partitions(3)
@@ -54,7 +54,7 @@ public class KafkaTopicsConfig {
     }
 
     @Bean
-    public NewTopic addition(){
+    public NewTopic addition() {
         NewTopic topic = TopicBuilder
                 .name(addition)
                 .partitions(3)
@@ -66,7 +66,7 @@ public class KafkaTopicsConfig {
     }
 
     @Bean
-    public NewTopic multiplication(){
+    public NewTopic multiplication() {
         NewTopic topic = TopicBuilder
                 .name(multiplication)
                 .partitions(3)
@@ -78,7 +78,7 @@ public class KafkaTopicsConfig {
     }
 
     @Bean
-    public NewTopic division(){
+    public NewTopic division() {
         NewTopic topic = TopicBuilder
                 .name(division)
                 .partitions(3)
@@ -89,9 +89,9 @@ public class KafkaTopicsConfig {
         return topic;
     }
 
-    //6 partitions for exponent as 3 consumers assumed
+    /* 6 partitions for exponent as 3 consumers assumed */
     @Bean
-    public NewTopic exponent(){
+    public NewTopic exponent() {
         NewTopic topic = TopicBuilder
                 .name(exponent)
                 .partitions(6)
@@ -103,7 +103,7 @@ public class KafkaTopicsConfig {
     }
 
     @Bean
-    public NewTopic superworker(){
+    public NewTopic superworker() {
         NewTopic topic = TopicBuilder
                 .name(superworker)
                 .partitions(3)
@@ -114,9 +114,9 @@ public class KafkaTopicsConfig {
         return topic;
     }
 
-    //only one partition to keep track of message order
+    /* one partition to keep track of message order */
     @Bean
-    public NewTopic superworkerState(){
+    public NewTopic superworkerState() {
         NewTopic topic = TopicBuilder
                 .name(superworkerState)
                 .partitions(1)

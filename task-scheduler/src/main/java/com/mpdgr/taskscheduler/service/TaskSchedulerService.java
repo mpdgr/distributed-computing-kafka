@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -20,15 +23,22 @@ public class TaskSchedulerService {
     @Value("${computing.properties.assist:2}")
     private Integer minLag;
 
+    /* delay added so the tasks are not send at once to allow better load balancing */
+    @Value("${computing.properties.delay:0}")
+    private long sendDelay;
+
 
     public ComputationEvent scheduleTask(ComputationEvent event)
-            throws ProgressReportMissingException, JsonProcessingException {
+            throws ProgressReportMissingException, JsonProcessingException, InterruptedException {
 
         /* check whether incoming task belongs to any of the jobs registered by scheduler */
         boolean isRegistered = registry.jobRegistered(event);
         if (!isRegistered) {
             registry.registerJob(event);
         }
+
+        CountDownLatch latch = new CountDownLatch(1);
+        latch.await(sendDelay, TimeUnit.MILLISECONDS);
 
         /* log the task as scheduled in the report  */
         logTaskInReport(event);

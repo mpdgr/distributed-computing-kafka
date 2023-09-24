@@ -14,18 +14,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+//todo
 /**
- * All incoming computation events with completed tasks are stored in a completedEventsMap
- * map key - jobId
- * map value - list of completed events for respective job
- * <p>
- * jobSizes map holds information about how many tasks were assigned to each job
- * New job is saved in both maps once the controller receives computation request.
- * <p>
+ * All incoming computation events with completed tasks are stored in a completedEventsMap. <p>
+ * jobSizes map stores information about how many tasks were assigned to each job. <p>
+ * New job is recorded in both maps once the controller receives computation request. <p>
  * Each time new completed ComputationEvent is saved in the completedEventsMap,
- * respective list size is checked. Once the size matches expected nr of tasks for job completion,
- * event is initiated and results are passed to the controller.
+ * respective list size is checked. Once the nr of completed tasks matches total expected nr of tasks for a given job,
+ * event is produced and results are passed to the controller.
  */
 
 @Component
@@ -41,20 +37,20 @@ public class ResultsRegistry {
         String jobId = event.getJobId();
         log.trace("Registry processing event, job ID: {}", jobId);
 
-        //check if event belongs to registered job
-        if (!completedEventsMap.containsKey(jobId)){
+        /* check if event belongs to registered job */
+        if (!completedEventsMap.containsKey(jobId)) {
             throw new ResultsRegistryException(String
                     .format("Completed events map doesn't contain job key: %s", jobId));
         }
 
-        //add event to list of events completed so far
+        /* add event to list of events completed so far */
         List<ComputationEvent> completedSoFar = completedEventsMap.get(event.getJobId());
         completedSoFar.add(event);
         completedEventsMap.put(event.getJobId(), completedSoFar);
 
         log.debug("Completed task recorded for job id: {}", jobId);
 
-        //check if job is complete - if so, produce adequate event
+        /* check if job is complete - if so, produce adequate event */
         if (jobComplete(jobId, (long) completedSoFar.size())) {
             produceJobCompleteEvent(event.getJobId());
         }
@@ -63,7 +59,7 @@ public class ResultsRegistry {
     }
 
     private boolean jobComplete(String jobId, Long completed) throws ResultsRegistryException {
-        if (!jobSizes.containsKey(jobId)){
+        if (!jobSizes.containsKey(jobId)) {
             throw new ResultsRegistryException(String
                     .format("Job sizes map doesn't contain job key: %s", jobId));
         }
@@ -72,11 +68,11 @@ public class ResultsRegistry {
 
     boolean registerJob(ComputationJob job) throws ResultsRegistryException {
         String jobId = job.getJobId();
-        if (completedEventsMap.containsKey(jobId)){
+        if (completedEventsMap.containsKey(jobId)) {
             throw new ResultsRegistryException(String
                     .format("Completed events map contains job key: %s", jobId));
         }
-        if (jobSizes.containsKey(jobId)){
+        if (jobSizes.containsKey(jobId)) {
             throw new ResultsRegistryException(String
                     .format("Job sizes map contains job key: %s", jobId));
         }
@@ -86,7 +82,7 @@ public class ResultsRegistry {
         return true;
     }
 
-    private void produceJobCompleteEvent(String jobId){
+    private void produceJobCompleteEvent(String jobId) {
         log.debug("Publishing job complete event, job id: {}", jobId);
         eventsPublisher.publishJobCompletedEvent(
                 new JobCompleteEvent(this, jobId, completedEventsMap.get(jobId)));

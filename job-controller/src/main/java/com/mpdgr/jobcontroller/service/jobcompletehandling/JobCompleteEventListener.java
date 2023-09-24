@@ -1,7 +1,6 @@
 package com.mpdgr.jobcontroller.service.jobcompletehandling;
 
 import com.mpdgr.commonrepo.domain.ComputationJob;
-import com.mpdgr.commonrepo.exception.SystemException;
 import com.mpdgr.jobcontroller.domain.JobCompleteEvent;
 import com.mpdgr.jobcontroller.domain.JobCompleteSummary;
 import lombok.Getter;
@@ -22,18 +21,10 @@ public class JobCompleteEventListener implements ApplicationListener<JobComplete
     private final CompletableFuture<JobCompleteSummary> futureSummary;
     private final JobCompleteEventHandlingConfig config;
 
-//    public void logJob(){
-//        //for debugging only
-//        log.debug("Listening for job id: {}", jobId);
-//        log.debug("Listening for job: {}, listener hash: {}", this.job, this.hashCode());
-//    }
-
     @Override
     public void onApplicationEvent(JobCompleteEvent event) {
         log.info("Application event noticed, job id: {}", event.getJobId());
-        log.debug("Processing listener job: {}", job);
         if (event.getJobId().equals(job.getJobId())) {
-            log.debug("Future complete attempt for job: {}", job.getJobId());
             JobCompleteEventHandler jobCompleteEventHandler = new JobCompleteEventHandler();
             futureSummary.complete(jobCompleteEventHandler.handleJobCompleted(job, event));
             log.debug("Future completed for job: {}", job.getJobId());
@@ -41,7 +32,7 @@ public class JobCompleteEventListener implements ApplicationListener<JobComplete
         }
     }
 
-    //listeners compared on jobId only
+    /* listeners compared on jobId only */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

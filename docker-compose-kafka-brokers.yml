@@ -18,6 +18,8 @@ services:
       - kafka_broker_2
       - kafka_broker_3
     container_name: task-scheduler
+    environment:
+      SCHEDULE_DELAY: 20
 
   adder:
     image: standard-worker:latest
