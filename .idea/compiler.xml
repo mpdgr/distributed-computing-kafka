@@ -19,6 +19,7 @@
       <module name="divider" target="17" />
       <module name="exponent" target="17" />
       <module name="multiplier" target="17" />
+      <module name="supercomputer" target="17" />
       <module name="superworker" target="17" />
     </bytecodeTargetLevel>
   </component>
