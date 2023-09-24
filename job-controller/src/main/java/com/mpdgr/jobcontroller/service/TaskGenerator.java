@@ -1,7 +1,7 @@
 package com.mpdgr.jobcontroller.service;
 
-import com.mpdgr.jobcontroller.domain.ComputationTask;
-import com.mpdgr.jobcontroller.domain.ComputationType;
+import com.mpdgr.commonrepo.domain.ComputationTask;
+import com.mpdgr.commonrepo.enumeration.ComputationType;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +31,8 @@ public class TaskGenerator {
 
     private ComputationTask createDivisionTask(){
         return new ComputationTask(ComputationType.DIVISION,
-                rand.nextDouble(100_000 + 10_000),
-                rand.nextDouble(1_000) + Double.MIN_VALUE //TODO: min to avoid zero division
+                rand.nextDouble(100_000),
+                rand.nextDouble(100_000)
         );
     }
 
@@ -45,8 +45,8 @@ public class TaskGenerator {
 
     private ComputationTask createMultiplicationTask(){
         return new ComputationTask(ComputationType.MULTIPLICATION,
-                rand.nextDouble(10_000),
-                rand.nextDouble(10_000)
+                rand.nextDouble(100_000),
+                rand.nextDouble(100_000)
         );
     }
 }

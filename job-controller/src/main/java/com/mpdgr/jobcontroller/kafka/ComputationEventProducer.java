@@ -2,7 +2,7 @@ package com.mpdgr.jobcontroller.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mpdgr.jobcontroller.domain.ComputationEvent;
+import com.mpdgr.commonrepo.domain.ComputationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -23,19 +23,19 @@ public class ComputationEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
-    @Value("${spring.kafka.topic.compute-task}")
+    @Value("${spring.kafka.topic-names.compute-task}")
     private String computeTopic;
 
     public CompletableFuture<SendResult<String, String>> sendComputationEvent(ComputationEvent event)
             throws JsonProcessingException {
         String key = event.getJobId();
-        String value = mapper.writeValueAsString(event.getTask());
+        String value = mapper.writeValueAsString(event);
         ProducerRecord<String, String> record = buildRecord(computeTopic, key, value);
         CompletableFuture<SendResult<String, String>> resultFuture = kafkaTemplate.send(record);
         return resultFuture.whenComplete(new SendResultBiConsumer<>(event));
     }
 
-    private ProducerRecord<String, String> buildRecord(String topic, String key, String value){
+    private ProducerRecord<String, String> buildRecord(String topic, String key, String value) {
         Header source = new RecordHeader("event-source", "job-controller".getBytes());
         Header type = new RecordHeader("event-type", "computation-event".getBytes());
         return new ProducerRecord<>(topic, null, key, value, List.of(source, type));

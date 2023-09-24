@@ -1,6 +1,6 @@
 package com.mpdgr.jobcontroller.kafka;
 
-import com.mpdgr.jobcontroller.domain.JobEvent;
+import com.mpdgr.commonrepo.domain.JobEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.support.SendResult;
@@ -11,14 +11,13 @@ import java.util.function.BiConsumer;
 @RequiredArgsConstructor
 public class SendResultBiConsumer<T extends JobEvent> implements BiConsumer<SendResult<String, String>, Throwable> {
     private final T event;
-    private final String SUCCESS_MESSAGE = "Kafka producer  event sent - event: {}";
-    private final String ERROR_MESSAGE = "Kafka producer sending error! jobId: {}, error: {}event: {}; ";
+    private static final String SUCCESS_MESSAGE = "Kafka producer  event sent - job: {}";
+    private static final String ERROR_MESSAGE = "Kafka producer sending error! jobId: {}, error: {}, event: {}; ";
 
     @Override
     public void accept(SendResult<String, String> result, Throwable throwable) {
-        if (throwable != null){
+        if (throwable != null) {
             log.error(ERROR_MESSAGE, event.getJobId(), throwable, event);
-            //todo: implement error handling
         } else {
             log.trace(SUCCESS_MESSAGE, event.getJobId());
         }

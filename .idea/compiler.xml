@@ -7,24 +7,33 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="supercomputer" />
+        <module name="common-repo" />
+        <module name="standard-worker" />
         <module name="job-controller" />
-        <module name="divider" />
-        <module name="multiplier" />
-        <module name="adder" />
+        <module name="super-worker" />
         <module name="task-scheduler" />
-        <module name="exponent" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="adder" target="17" />
+      <module name="divider" target="17" />
+      <module name="exponent" target="17" />
+      <module name="multiplier" target="17" />
+      <module name="supercomputer" target="17" />
+      <module name="superworker" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="adder" options="-parameters" />
+      <module name="common-repo" options="-parameters" />
       <module name="divider" options="-parameters" />
       <module name="exponent" options="-parameters" />
       <module name="job-controller" options="-parameters" />
       <module name="multiplier" options="-parameters" />
-      <module name="supercomputer" options="-parameters" />
+      <module name="standard-worker" options="-parameters" />
+      <module name="super-worker" options="-parameters" />
+      <module name="superworker" options="-parameters" />
       <module name="task-scheduler" options="-parameters" />
     </option>
   </component>

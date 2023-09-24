@@ -14,13 +14,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>multiplier</module>
+        <module>common-repo</module>
         <module>job-controller</module>
         <module>task-scheduler</module>
-        <module>divider</module>
-        <module>adder</module>
-        <module>supercomputer</module>
-        <module>exponent</module>
+        <module>standard-worker</module>
+        <module>super-worker</module>
     </modules>
 
     <properties>
@@ -42,7 +40,6 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

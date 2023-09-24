@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: docker
 server:
   port: 8082
 
@@ -8,31 +8,32 @@ server:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: docker
   kafka:
-    bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
-#    producer:
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    bootstrap-servers: kafka_broker_1:9092, kafka_broker_2:9093, kafka_broker_3:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      linger-ms: 0
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: task-scheduler
-#    properties:
-#      acks: -1  #todo: chyba nie działa
-#      retries: 50
-#    admin:
-#      properties:
-#        client.id: adm
-    topic:
+    topic-names:
       compute-task: compute-task
       completed-task: completed-task
       addition: addition
       multiplication: multiplication
       division: division
       exponent: exponent
-      supercomputer: supercomputer
+      superworker: superworker
+      superworker-state: superworker-state
 logging:
   level:
     root: info
-    com.mpdgr: debug
+    com.mpdgr: trace
+computing:
+  properties:
+    assist: 2
+    delay: ${SCHEDULE_DELAY}
+instance.properties.worker.id: ${WORKER_ID}
