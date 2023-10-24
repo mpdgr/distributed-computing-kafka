@@ -8,4 +8,6 @@ This app is a demonstration of distributed system consisting of microservices co
 * kafka cluster – handles all communication between microservices.
 
 Flexible configuration allows setting of arbitrary nr of workers instances and configuring task time consumption factor to test different set-ups.
+<br/>
+<br/>
 ![kafka_description](https://github.com/mpdgr/distributed-computing-kafka/assets/95987591/1e94bedd-68ad-4aa7-990c-a30352afb7ce)
